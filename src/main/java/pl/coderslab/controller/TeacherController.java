@@ -54,4 +54,16 @@ public class TeacherController {
         return "teacher/mainTPage";
     }
 
+    @GetMapping("/addTeacher")
+    public String addTeacher(Model model){
+        Teacher teacher = new Teacher();
+        model.addAttribute("teacher", teacher);
+        return "teacher/addTeacher";
+    }
+    @PostMapping("/addTeacher")
+    public String addTeacher(@ModelAttribute Teacher teacher){
+        teacherRepository.save(teacher);
+        return "redirect:mainPage";
+    }
+
 }

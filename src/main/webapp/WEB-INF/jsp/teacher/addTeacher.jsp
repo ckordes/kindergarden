@@ -14,7 +14,18 @@
 <body>
 <h1>Add Teacher</h1>
 <div>
-    <form:form method="post" modelAttribute="${}"
+
+    <form:form method="post" modelAttribute="teacher">
+        First Name: <form:input path="${teacher.person.firstName}"/><br />
+        Second Name: <form:input path="${teacher.person.secondName}"/><br />
+        Last Name: <form:input path="${teacher.person.lastName}"/><br />
+        Id Number: <form:input path="${teacher.person.idNumber}"/><br />
+        PESEL: <form:input path="${teacher.person.pesel}"/><br />
+        E-mail: <form:input path="${teacher.person.email}"/><br />
+        Password: <form:input path="${teacher.person.password}"/><br />
+<%--        <form:input path="${teacher.person.setAddress()}"/><br />--%>
+        <input type="submit" value="Save">
+    </form:form>
 </div>
 </body>
 </html>

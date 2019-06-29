@@ -17,8 +17,9 @@
 </header>
 
 <div>
-    <a href="../group/addgroup">Add or Edit Group</a>
-
+    <h4>Create...</h4>
+    <a href="../group/addgroup">Add or Edit Group</a><br />
+    <a href="addTeacher">Create Teacher</a><br />
 </div>
 
 <div>
