@@ -15,9 +15,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import pl.coderslab.converter.AddressConverter;
-import pl.coderslab.converter.ChildConverter;
-import pl.coderslab.converter.TeacherConverter;
+import pl.coderslab.converter.*;
 import pl.coderslab.entity.Address;
 
 import javax.persistence.EntityManagerFactory;
@@ -60,6 +58,9 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addConverter(getChildConverter());
         registry.addConverter(getTeacherConverter());
         registry.addConverter(getAddressConverter());
+        registry.addConverter(getAllergieConverter());
+        registry.addConverter(getParentConverter());
+        registry.addConverter(getGroupConverter());
     }
     @Bean
     public ChildConverter getChildConverter() {
@@ -69,6 +70,12 @@ public class AppConfig implements WebMvcConfigurer {
     public TeacherConverter getTeacherConverter(){return new TeacherConverter();}
     @Bean
     public AddressConverter getAddressConverter(){return new AddressConverter();}
+    @Bean
+    public AllergieConverter getAllergieConverter(){return new AllergieConverter();}
+    @Bean
+    public ParentConverter getParentConverter(){return new ParentConverter();}
+    @Bean
+    public GroupConverter getGroupConverter(){return new GroupConverter();}
 
 
 //    @Override
