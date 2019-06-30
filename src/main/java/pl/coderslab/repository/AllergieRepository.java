@@ -2,10 +2,8 @@ package pl.coderslab.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.coderslab.entity.Group;
-
+import pl.coderslab.entity.Allergie;
 @Repository
-public interface GroupRepository extends JpaRepository<Group,Long> {
-
-    Group findById(long id);
+public interface AllergieRepository extends JpaRepository<Allergie,Long> {
+    Allergie findById(long id);
 }

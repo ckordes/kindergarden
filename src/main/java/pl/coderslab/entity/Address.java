@@ -3,13 +3,14 @@ package pl.coderslab.entity;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
 
 @Entity
 public class Address {
     @Id
     @GeneratedValue
     private long id;
-
+//    @AssertTrue
     private boolean homeWork;
     @NotBlank
     private String street;

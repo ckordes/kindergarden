@@ -82,4 +82,8 @@ public class Parent {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getFullName(){
+        return this.person.getFullName();
+    }
 }

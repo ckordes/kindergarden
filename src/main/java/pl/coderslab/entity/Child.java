@@ -17,7 +17,6 @@ public class Child {
     @OneToOne(fetch = FetchType.EAGER)
     @NotNull
     private Person person;
-    @NotEmpty
     @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER
     private List<Parent> parentList;
     @NotEmpty
@@ -31,9 +30,9 @@ public class Child {
     private List<Allergie> allergieList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<InfoForTeacher> infoForTeachers;
-    @NotBlank
+//    @NotBlank
     private double startHour;
-    @NotBlank
+//    @NotBlank
     private double endHour;
 
     public Child() {

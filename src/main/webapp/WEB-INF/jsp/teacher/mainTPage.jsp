@@ -21,6 +21,7 @@
     <a href="../group/addgroup">Add or Edit Group</a><br />
     <a href="manageteachers">Manage Teachers</a><br />
     <a href="manageparents">Manage Parents</a><br />
+    <a href="../child/managechildren">Manage Children</a><br />
 
 </div>
 
