@@ -62,7 +62,7 @@ public class GroupController {
     @PostMapping("/addgroup")
     public String addGroup(@ModelAttribute Group group) {
         groupRepository.save(group);
-        return "redirect:mainPage";
+        return "redirect:/teacher/mainPage";
     }
 
     @GetMapping("/editgroup/{id}")

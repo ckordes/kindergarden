@@ -15,8 +15,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import pl.coderslab.converter.AddressConverter;
 import pl.coderslab.converter.ChildConverter;
 import pl.coderslab.converter.TeacherConverter;
+import pl.coderslab.entity.Address;
 
 import javax.persistence.EntityManagerFactory;
 import javax.validation.Validator;
@@ -57,6 +59,7 @@ public class AppConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getChildConverter());
         registry.addConverter(getTeacherConverter());
+        registry.addConverter(getAddressConverter());
     }
     @Bean
     public ChildConverter getChildConverter() {
@@ -64,6 +67,8 @@ public class AppConfig implements WebMvcConfigurer {
     }
     @Bean
     public TeacherConverter getTeacherConverter(){return new TeacherConverter();}
+    @Bean
+    public AddressConverter getAddressConverter(){return new AddressConverter();}
 
 
 //    @Override

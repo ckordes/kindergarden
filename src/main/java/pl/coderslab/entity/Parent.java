@@ -26,9 +26,7 @@ public class Parent {
 //    private String email;
 //    @NotBlank
 //    private String password;
-    @NotBlank
     private boolean guardian;
-    @NotBlank
     private boolean allowedToPickUp;
     @NotEmpty
     @ManyToMany//(fetch = FetchType.EAGER)

@@ -21,9 +21,11 @@ public class Person {
     private String lastName;
 
     private String idNumber;
-    @OneToMany(mappedBy = "person")//,fetch = FetchType.EAGER
-    @NotEmpty
-    private List<Address> addressList;
+
+    @OneToOne //( cascade = {CascadeType.ALL})
+    private Address homeAddress;
+    @OneToOne //( cascade = {CascadeType.ALL})
+    private Address workAddress;
 
 //    @NotBlank
 //    @Email
@@ -75,12 +77,20 @@ public class Person {
         this.idNumber = idNumber;
     }
 
-    public List<Address> getAddressList() {
-        return addressList;
+    public Address getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Address getWorkAddress() {
+        return workAddress;
+    }
+
+    public void setWorkAddress(Address workAddress) {
+        this.workAddress = workAddress;
     }
 
     public String getEmail() {
@@ -105,6 +115,10 @@ public class Person {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getFullName(){
+        return this.getFirstName() +" "+this.getLastName();
     }
 }
 
