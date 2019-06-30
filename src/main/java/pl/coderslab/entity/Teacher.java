@@ -16,7 +16,7 @@ public class Teacher {
     @GeneratedValue
     private long id;
 
-    @OneToOne//(fetch = FetchType.EAGER)
+    @OneToOne//(cascade = {CascadeType.MERGE,CascadeType.REMOVE})//(fetch = FetchType.EAGER)
     @NotNull
     private Person person;
 

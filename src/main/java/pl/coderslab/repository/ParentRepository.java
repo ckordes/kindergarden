@@ -6,4 +6,5 @@ import pl.coderslab.entity.Person;
 
 public interface ParentRepository extends JpaRepository<Parent, Long> {
     Parent findByPerson(Person person);
+    Parent findById(long id);
 }

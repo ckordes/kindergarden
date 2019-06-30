@@ -16,15 +16,12 @@ public class Address {
     @NotBlank
     private String numberBuilding;
     private String numberFlat;
-    @NotBlank
+//    @NotBlank
     private int zipCode;
     @NotBlank
-    private String City;
+    private String city;
     @NotBlank
     private String voievodyship;
-    @ManyToOne//(fetch = FetchType.EAGER)
-    private Person person;
-
 
     public Address() {
     }
@@ -62,11 +59,11 @@ public class Address {
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public String getVoievodyship() {
@@ -93,11 +90,13 @@ public class Address {
         this.homeWork = homeWork;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
+    public Address(boolean homeWork, String street, String numberBuilding, String numberFlat, int zipCode, String city, String voievodyship) {
+        this.homeWork = homeWork;
+        this.street = street;
+        this.numberBuilding = numberBuilding;
+        this.numberFlat = numberFlat;
+        this.zipCode = zipCode;
+        this.city = city;
+        this.voievodyship = voievodyship;
     }
 }

@@ -19,7 +19,9 @@
 <div>
     <h4>Create...</h4>
     <a href="../group/addgroup">Add or Edit Group</a><br />
-    <a href="addTeacher">Create Teacher</a><br />
+    <a href="manageteachers">Manage Teachers</a><br />
+    <a href="manageparents">Manage Parents</a><br />
+
 </div>
 
 <div>
