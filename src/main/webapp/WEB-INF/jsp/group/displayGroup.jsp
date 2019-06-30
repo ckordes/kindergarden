@@ -15,7 +15,7 @@
 <div>
     <h5>Children in groups</h5>
 <c:forEach items="${group.childList}" var="child">
-    ${child.person.firstName}, ${child.person.lastName} ${child.person.idNumber}<br/>
+   Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel}<br/>
 </c:forEach>
 </div>
 <div>

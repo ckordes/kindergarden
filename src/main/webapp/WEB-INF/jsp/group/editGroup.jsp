@@ -15,18 +15,18 @@
 <body>
 <div>
     <form:form method="post" modelAttribute="group">
-        <form:input path="name"/>
-        <form:input path="description"/>
-        <form:select path="childList" multiple="true">
+        Name: <form:input path="name"/><br />
+        Description: <form:input path="description"/><br />
+        Child List: <form:select path="childList" multiple="true">
             <c:forEach items="${allChildren}" var="child">
                 <option value="${child.id}" ${group.childList.contains(child) ? 'selected="selected"' : ''}>${child.fullName}</option>
             </c:forEach>
-        </form:select>
-        <form:select path="teacherList" multiple="true">
+        </form:select><br />
+        Teacher List: <form:select path="teacherList" multiple="true">
             <c:forEach items="${allTeachers}" var="teacher">
                 <option value="${teacher.id}" ${group.teacherList.contains(teacher) ? 'selected="selected"' : ''}>${teacher.fullName}</option>
             </c:forEach>
-        </form:select>
+        </form:select><br />
         <input type="submit" value="Save">
     </form:form>
 </div>

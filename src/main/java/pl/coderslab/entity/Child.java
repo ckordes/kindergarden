@@ -20,7 +20,7 @@ public class Child {
     @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER
     private List<Parent> parentList;
     @NotEmpty
-    @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER
+    @ManyToMany(mappedBy = "childList",cascade = CascadeType.MERGE)//,fetch = FetchType.EAGER
     private List<Group> groupList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<Payment> paymentList;
