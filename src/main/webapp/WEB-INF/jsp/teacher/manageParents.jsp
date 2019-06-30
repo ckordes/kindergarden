@@ -19,7 +19,7 @@
 <div>
     <h4>List of all Parents</h4>
     <c:forEach items="${allParents}" var="parent">
-        <a href="">Edit ${parent.person.fullName}</a>
+        <a href="editparent/${parent.id}">Edit ${parent.person.fullName}</a>
         <a href="deleteparent/${parent.id}">Delete ${parent.person.fullName}</a><br />
     </c:forEach>
 </div>

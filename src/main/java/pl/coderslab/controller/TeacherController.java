@@ -197,4 +197,22 @@ public class TeacherController {
         addressRepository.delete(workAddress);
         return "redirect:/teacher/mainPage";
     }
+
+    @GetMapping("/editparent/{id}")
+    public String editParent(@PathVariable long id, Model model){
+        Parent parent = parentRepository.findById(id);
+        model.addAttribute("parent",parent);
+        return "/teacher/editParent";
+    }
+    @PostMapping("/editparent/{id}")
+    public String editParent(@ModelAttribute Parent parent){
+        Person person = parent.getPerson();
+        Address homeAddress = person.getHomeAddress();
+        Address workAddress = person.getWorkAddress();
+        addressRepository.save(homeAddress);
+        addressRepository.save(workAddress);
+        personRepository.save(person);
+        parentRepository.save(parent);
+        return "redirect:/teacher/mainPage";
+    }
 }
