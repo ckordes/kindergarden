@@ -34,7 +34,6 @@
         <form:select path="groupList" multiple="true" items="${allGroups}" itemValue="id" itemLabel="name"/><br />
 
         Parents:
-<%--        <form:select path="parentList" multiple="true" items="${allParents}" itemLabel="parent.fullName" itemValue="id"/>--%>
 
                 <form:select path="parentList" multiple="true">
                     <c:forEach items="${allParents}" var="parent">
@@ -42,17 +41,8 @@
                     </c:forEach>
                 </form:select><br />
 
-
             Allergies:
             <form:select path="allergieList" items="${allAllergies}" itemLabel="typeOfAllergie" itemValue="id"/><br />
-
-<%--            <form:select path="allergieList" multiple="true">--%>
-<%--                <c:forEach items="${allAllergies}" var="allergie">--%>
-<%--                    <option value="${allergie.id}" ${child.allergieList.contains(allergie) ? 'selected="selected"' : ''}>${allergie.typeOfAllergie}</option>--%>
-<%--                </c:forEach>--%>
-<%--            </form:select><br/>--%>
-
-
         <input type="submit" value="Save">
     </form:form>
 </div>

@@ -71,7 +71,7 @@ public class MainPageController {
                id = parent.getId();
                httpSession.setAttribute("loggedUser",loggedUser);
                httpSession.setAttribute("id",id);
-               return "redirect:/parent/mainpage";
+               return "redirect:/parent/mainPage";
            }
        }
     }

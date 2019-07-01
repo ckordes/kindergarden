@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "group_table")
 public class Group {
@@ -73,6 +74,19 @@ public class Group {
 
     public void setTeacherList(List<Teacher> teacherList) {
         this.teacherList = teacherList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return id == group.id ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, childList, description, groupInfoList, teacherList);
     }
 }
 
