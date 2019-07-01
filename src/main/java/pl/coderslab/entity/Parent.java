@@ -86,4 +86,12 @@ public class Parent {
     public String getFullName(){
         return this.person.getFullName();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Parent parent = (Parent) obj;
+        return id == parent.id;
+    }
 }

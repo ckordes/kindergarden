@@ -1,5 +1,6 @@
 package pl.coderslab.entity;
 
+import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2DTM2;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,22 +18,22 @@ public class Child {
     @OneToOne(fetch = FetchType.EAGER)
     @NotNull
     private Person person;
-    @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER
+    @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Parent> parentList;
     @NotEmpty
-    @ManyToMany(mappedBy = "childList",cascade = CascadeType.MERGE)//,fetch = FetchType.EAGER
+    @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Group> groupList;
-    @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER)
     private List<Payment> paymentList;
-    @OneToMany (mappedBy = "child")//,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<ChildRelatedMessages> childRelatedMessagesList;
     @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER)
     private List<Allergie> allergieList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<InfoForTeacher> infoForTeachers;
-//    @NotBlank
+    //    @NotBlank
     private double startHour;
-//    @NotBlank
+    //    @NotBlank
     private double endHour;
 
     public Child() {
@@ -118,8 +119,22 @@ public class Child {
         this.id = id;
     }
 
-    public String getFullName(){
-        return person.getFirstName() + " "+ person.getLastName();
+    public String getFullName() {
+        return person.getFirstName() + " " + person.getLastName();
+    }
+
+    public Child(Person person, List<Parent> parentList, List<Group> groupList, List<Payment> paymentList,
+                 List<ChildRelatedMessages> childRelatedMessagesList, List<Allergie> allergieList,
+                 List<InfoForTeacher> infoForTeachers, double startHour, double endHour) {
+        this.person = person;
+        this.parentList = parentList;
+        this.groupList = groupList;
+        this.paymentList = paymentList;
+        this.childRelatedMessagesList = childRelatedMessagesList;
+        this.allergieList = allergieList;
+        this.infoForTeachers = infoForTeachers;
+        this.startHour = startHour;
+        this.endHour = endHour;
     }
 
     @Override
@@ -133,6 +148,15 @@ public class Child {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Child cloneChild(Person person, List<Parent> parentList, List<Group> groupList, List<Payment> paymentList,
+                            List<ChildRelatedMessages> childRelatedMessagesList, List<Allergie> allergieList,
+                            List<InfoForTeacher> infoForTeachers, double startHour, double endHour) {
+        Child child = new Child(person, parentList, groupList, paymentList,
+                childRelatedMessagesList, allergieList,
+                infoForTeachers, startHour, endHour);
+        return child;
     }
 }
 
