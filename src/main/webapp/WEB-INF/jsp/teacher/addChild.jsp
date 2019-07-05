@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<%@include file="../header.jsp"%>
+
 <div>
     <form:form method="post" modelAttribute="child">
         First Name: <form:input path="person.firstName"/><br/>
@@ -46,5 +48,8 @@
         <input type="submit" value="Save">
     </form:form>
 </div>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>

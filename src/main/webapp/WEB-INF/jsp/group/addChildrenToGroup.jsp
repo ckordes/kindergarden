@@ -12,12 +12,15 @@
     <title>Add Children to Group</title>
 </head>
 <body>
+<%@include file="../header.jsp"%>
 
 <form:form method="post" modelAttribute="group">
     <form:checkboxes path="childList" items="${group.childList}" itemLabel="fullName" itemValue="id"
                      checked="true"/><br/>
     <input type="submit" value="Save">
 </form:form>
+
+<%@include file="../footer.jsp"%>
 
 </body>
 </html>

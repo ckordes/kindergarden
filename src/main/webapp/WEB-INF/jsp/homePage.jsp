@@ -3,8 +3,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: baltazar
-  Date: 25.06.19
-  Time: 22:29
+  Date: 05.07.19
+  Time: 21:59
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,28 +13,16 @@
     <title>Welcome in kindergarden</title>
 </head>
 <body>
+<%@include file="header.jsp"%>
 
-<h2>Kindergarden</h2>
 
-
-<div>
-    <form:form modelAttribute="loginMode" method="post">
-        Email: <form:input path="email"/>
-        Password: <form:input path="password"/>
-        <input type="submit" value="Login">
-    </form:form>
-</div>
-
-<div>
+<section>
     <h3>General Messages</h3>
     <c:forEach items="${generalInfo}" var="info">
         ${info.message}<br />
         ${info.created}<br />
         <br />
     </c:forEach>
-</div>
-
-<%@include file="footer.jsp"%>
-
+</section>
 </body>
 </html>
