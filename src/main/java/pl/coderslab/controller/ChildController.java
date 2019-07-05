@@ -82,17 +82,12 @@ public class ChildController {
     public String editChild(@PathVariable long id, Model model) {
         Child child = childRepository.findById(id);
         model.addAttribute("child", child);
-        List<Long> parentIdList = new ArrayList<>();
-        for (Parent parent: child.getParentList()){
-            parentIdList.add(parent.getId());
-        }
-        model.addAttribute("parentIdList",parentIdList);
 
         return "teacher/editChild";
     }
 
     @PostMapping("/editchild/{id}")
-    public String editChild(@ModelAttribute Child child, @ModelAttribute("parentIdList") List<Long> parentIdList) {
+    public String editChild(@ModelAttribute Child child) {
         Person person = child.getPerson();
         Address address = person.getHomeAddress();
         updateParentRepo(child);

@@ -22,6 +22,9 @@ public class AuthenticationService {
 
     public Person checkPasswordForUser(String email, String password){
         Person person = personRepository.findByEmail(email);
+        if (person==null){
+            return null;
+        }
         boolean equalPassword = password.equals(person.getPassword());
 //        boolean equalPassword = BCrypt.checkpw(password, person.getPassword());
         if (equalPassword) {

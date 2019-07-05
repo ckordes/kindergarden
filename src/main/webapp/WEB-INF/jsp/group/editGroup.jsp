@@ -13,6 +13,9 @@
     <title>Edit Group</title>
 </head>
 <body>
+
+<%@include file="../header.jsp"%>
+
 <div>
     <form:form method="post" modelAttribute="group">
         Name: <form:input path="name"/><br />
@@ -30,5 +33,8 @@
         <input type="submit" value="Save">
     </form:form>
 </div>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>

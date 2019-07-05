@@ -12,6 +12,9 @@
     <title>Manage Parents</title>
 </head>
 <body>
+
+<%@include file="../header.jsp"%>
+
 <div>
     <h4>Create...</h4>
     <a href="addParent">Add Parent</a><br />
@@ -23,5 +26,8 @@
         <a href="deleteparent/${parent.id}">Delete ${parent.person.fullName}</a><br />
     </c:forEach>
 </div>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>

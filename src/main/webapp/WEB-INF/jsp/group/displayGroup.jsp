@@ -12,11 +12,18 @@
     <title>Display Group</title>
 </head>
 <body>
+<%@include file="../header.jsp"%>
 <div>
     <h5>Children in groups</h5>
 <c:forEach items="${group.childList}" var="child">
-   Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel}<br/>
+   Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel} <a href="../../parent/displayChild/${child.id}">Display Child Info</a> <br/>
 </c:forEach>
+</div>
+<div>
+    <a href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a>
+</div>
+<div>
+<a href="/kindergarden_war_exploded/teacher/addGroupInfo/${group.id}">Add Info For Whole Group</a>
 </div>
 <div>
     <h5>Group Messages</h5>
@@ -26,8 +33,7 @@
     </c:forEach>
 </div>
 
-<div>
-    <a href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a>
-</div>
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>

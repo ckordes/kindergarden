@@ -12,9 +12,9 @@
     <title>Welcome Teacher</title>
 </head>
 <body>
-<header>
+
+<%@include file="../header.jsp"%>
     <h1>Kindergarden</h1>
-</header>
 
 <div>
     <h4>Create...</h4>
@@ -22,6 +22,7 @@
     <a href="manageteachers">Manage Teachers</a><br />
     <a href="manageparents">Manage Parents</a><br />
     <a href="../child/managechildren">Manage Children</a><br />
+    <a href="addGeneralInfo">Add General Info</a><br />
 
 </div>
 
@@ -38,13 +39,8 @@
     <br />
 </c:forEach>
 <br />
-<footer>
-    Public Kindergarden number 4<br />
-    Street<br />
-    Postal Code<br />
-    City<br />
-    Telephone number<br />
-    <a href="/kindergarden_war_exploded/">Home Page</a>
-</footer>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>

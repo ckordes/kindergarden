@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<%@include file="../header.jsp"%>
+
 <div>
 
     <form:form method="post" modelAttribute="parent">
@@ -52,6 +54,8 @@
         <input type="submit" value="Save">
     </form:form>
 </div>
+
+<%@include file="../footer.jsp"%>
 
 </body>
 </html>

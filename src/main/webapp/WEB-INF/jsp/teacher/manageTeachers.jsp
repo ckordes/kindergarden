@@ -13,6 +13,8 @@
 </head>
 <body>
 
+<%@include file="../header.jsp"%>
+
 <div>
     <a href="addTeacher">Create Teacher</a><br />
 </div>
@@ -26,6 +28,7 @@
     </c:forEach>
 </div>
 
+<%@include file="../footer.jsp"%>
 
 </body>
 </html>

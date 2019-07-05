@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<%@include file="../header.jsp"%>
+
 <form:form modelAttribute="teacher" method="post">
     First Name: <form:input path="person.firstName"/><br />
     Second Name: <form:input path="person.secondName"/><br />
@@ -60,6 +62,8 @@
 
     <input type="submit" value="Save">
 </form:form>
+
+<%@include file="../footer.jsp"%>
 
 </body>
 </html>

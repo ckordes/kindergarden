@@ -2,27 +2,23 @@
 <%--
   Created by IntelliJ IDEA.
   User: baltazar
-  Date: 30.06.19
-  Time: 14:02
+  Date: 02.07.19
+  Time: 23:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Parent Page</title>
+    <title>Display Group Infos</title>
 </head>
 <body>
 
 <%@include file="../header.jsp"%>
 
-<h4>List of children</h4>
-<c:forEach items="${childList}" var="child">
-    <a href="displayChild/${child.id}">${child.fullName}</a><br />
-</c:forEach>
-
-<h4>List of Groups</h4>
-<c:forEach items="${groupList}" var="group">
-    <a href="groupInfo/${group.id}">${group.name}</a><br />
+<h4>Group Info List</h4>
+<c:forEach items="${group.groupInfoList}" var="info">
+    ${info.created}, ${info.message}<br />
+    <br />
 </c:forEach>
 
 <%@include file="../footer.jsp"%>

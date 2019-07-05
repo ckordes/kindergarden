@@ -13,6 +13,9 @@
     <title>Add Parent</title>
 </head>
 <body>
+
+<%@include file="../header.jsp"%>
+
 <h1>Add Teacher</h1>
 <div>
 
@@ -52,6 +55,9 @@
         <input type="submit" value="Save">
     </form:form>
 </div>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -215,4 +216,50 @@ public class TeacherController {
         parentRepository.save(parent);
         return "redirect:/teacher/mainPage";
     }
+
+    @GetMapping("/addGroupInfo/{id}")
+    public String addGroupInfo(@PathVariable long id, Model model){
+//        Group group = groupRepository.findById(id);
+//        model.addAttribute("group",group);
+        GroupInfo groupInfo = new GroupInfo();
+        model.addAttribute("groupInfo",groupInfo);
+        return "group/addGroupInfo";
+    }
+
+    @PostMapping("/addGroupInfo/{id}")
+    public String addGroupInfo(@ModelAttribute GroupInfo groupInfo,@PathVariable long id){
+        groupInfo.setCreated(LocalDateTime.now());
+        groupInfoRepository.save(groupInfo);
+        GroupInfo newGroupInfo = groupInfoRepository.findFirstByOrderByIdDesc();
+        Group group = groupRepository.findById(id);
+        List<GroupInfo> groupInfoList = group.getGroupInfoList();
+        groupInfoList.add(newGroupInfo);
+        groupRepository.save(group);
+        String retrunString= "/group/displayGroup/"+String.valueOf(id);
+        return "redirect:"+retrunString;
+    }
+
+
+    @RequestMapping("/childInfo/{id}")
+    public String childInfo(@PathVariable long id, Model model){
+        Child child= childRepository.findById(id   );
+        model.addAttribute("child", child);
+        return "parent/displayChildInfos";
+    }
+
+    @GetMapping("/addGeneralInfo")
+    public String addGeneralInfo(Model model){
+        GeneralInfo generalInfo = new GeneralInfo();
+        model.addAttribute("generalInfo",generalInfo);
+        return "teacher/addGeneralInfo";
+    }
+
+    @PostMapping("/addGeneralInfo")
+    public String addGeneralInfo(@ModelAttribute GeneralInfo generalInfo){
+        generalInfo.setCreated(LocalDateTime.now());
+        generalInfoRepository.save(generalInfo);
+        return "redirect:/teacher/mainPage";
+    }
+
+
 }

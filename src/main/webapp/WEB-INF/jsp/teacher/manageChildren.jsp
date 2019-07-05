@@ -12,6 +12,9 @@
     <title>Manage Children</title>
 </head>
 <body>
+
+<%@include file="../header.jsp"%>
+
 <div>
     <a href="createChild">Create Child</a>
 </div>
@@ -23,5 +26,8 @@
         <a href="deleteChild/${child.id}">Delete ${child.fullName}</a><br />
     </c:forEach>
 </div>
+
+<%@include file="../footer.jsp"%>
+
 </body>
 </html>
