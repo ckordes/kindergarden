@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import pl.coderslab.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,23 +40,29 @@ public class TeacherController {
         List<Group> groupList = groupRepository.findAll();
         return groupList;
     }
-
     @ModelAttribute("allChildren")
     public List<Child> allChildren() {
         List<Child> childList = childRepository.findAll();
         return childList;
     }
-
     @ModelAttribute("allTeachers")
     public List<Teacher> allTeachers() {
         List<Teacher> teacherList = teacherRepository.findAll();
         return teacherList;
     }
-
     @ModelAttribute("allParents")
     public List<Parent> allParents() {
         List<Parent> parentList = parentRepository.findAll();
         return parentList;
+    }
+    @ModelAttribute (name = "allGeneralInfos")
+    public List<GeneralInfo> allGeneralInfos(){
+        List<GeneralInfo> generalInfoList = generalInfoRepository.findAll();;
+        if (generalInfoList == null){
+            generalInfoList = new ArrayList<>();
+        }
+        Collections.reverse(generalInfoList);
+        return generalInfoList;
     }
 
     @RequestMapping("/mainPage")
@@ -78,6 +86,8 @@ public class TeacherController {
 
         Address addressH = new Address(true, streetH, buildingH, flatH, Integer.parseInt(zipH), cityH, voievodyshipH);
         Address addressW = new Address(true, streetW, buildingW, flatW, Integer.parseInt(zipW), cityW, voievodyshipW);
+        String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+        person.setPassword(hashedPassword);
 
         addressRepository.save(addressH);
         addressRepository.save(addressW);
@@ -165,6 +175,8 @@ public class TeacherController {
         Address workAddress = parent.getPerson().getWorkAddress();
         addressRepository.save(homeAddress);
         addressRepository.save(workAddress);
+        String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+        person.setPassword(hashedPassword);
         personRepository.save(person);
         parentRepository.save(parent);
         return "redirect:/teacher/mainPage";
@@ -259,6 +271,13 @@ public class TeacherController {
         generalInfo.setCreated(LocalDateTime.now());
         generalInfoRepository.save(generalInfo);
         return "redirect:/teacher/mainPage";
+    }
+
+    @RequestMapping("/deleteGeneralInfo/{id}")
+    public  String deleteGeneralInfo(@PathVariable long id){
+        generalInfoRepository.delete(id);
+        return "redirect:/teacher/addGeneralInfo";
+
     }
 
 

@@ -23,7 +23,7 @@
 <h4>List of Groups</h4>
 <c:forEach items="${groupList}" var="group">
     <a href="groupInfo/${group.id}">${group.name}</a><br />
-</c:forEach>
+</c:forEach><br />
 
 <%@include file="../footer.jsp"%>
 

@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import pl.coderslab.service.AuthenticationService;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -35,10 +37,11 @@ public class MainPageController {
 
     @ModelAttribute (name = "generalInfo")
     public List<GeneralInfo> generalInfoList(){
-        List<GeneralInfo> generalInfoList = generalInfoRepository.findAll();;
+        List<GeneralInfo> generalInfoList = generalInfoRepository.findAll();
         if (generalInfoList == null){
             generalInfoList = new ArrayList<>();
         }
+        Collections.reverse(generalInfoList);
         return generalInfoList;
     }
 
@@ -55,7 +58,7 @@ public class MainPageController {
 
     @PostMapping ("/")
     public String homePage (@ModelAttribute LoginMode loginMode,HttpSession httpSession){
-       Person person = authenticationService.checkPasswordForUser(loginMode.getEmail(),loginMode.getPassword());
+       Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());
        if (person == null) {
            return "redirect:/";
        }else {
@@ -86,9 +89,11 @@ public class MainPageController {
         Parent parent = parentRepository.findById((long) httpSession.getAttribute("id"));
         Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
         if(parent!=null){
+            parent.getPerson().setPassword("");
             model.addAttribute("person",parent.getPerson());
             return "authentication/changePassword";
         }else if (teacher !=null){
+            teacher.getPerson().setPassword("");
             model.addAttribute("person",teacher.getPerson());
             return "authentication/changePassword";
         }else {
@@ -101,11 +106,15 @@ public class MainPageController {
         Parent parent = parentRepository.findById((long) httpSession.getAttribute("id"));
         Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
         if(parent!=null){
+            String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+            person.setPassword(hashedPassword);
             personRepository.save(person);
             parent.setPerson(person);
             parentRepository.save(parent);
             return "redirect:/";
         }else {
+            String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+            person.setPassword(hashedPassword);
             personRepository.save(person);
             teacher.setPerson(person);
             teacherRepository.save(teacher);

@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: baltazar
@@ -13,16 +14,27 @@
 </head>
 <body>
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 
 <h3>Add General Info</h3>
+<div>
+    <form:form method="post" modelAttribute="generalInfo">
+        <form:input path="message"/>
+        <input type="submit" value="Save">
+    </form:form>
+</div>
 
-<form:form method="post" modelAttribute="generalInfo">
-    <form:input path="message"/>
-    <input type="submit" value="Save">
-</form:form>
+<div>
+    <h3>General Messages</h3>
+    <c:forEach items="${allGeneralInfos}" var="info">
+        ${info.message}<br/>
+        ${info.created} <a href="deleteGeneralInfo/${info.id}">Delete General Info</a>
+        <br/>
+    </c:forEach>
+</div>
 
-<%@include file="../footer.jsp"%>
+
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

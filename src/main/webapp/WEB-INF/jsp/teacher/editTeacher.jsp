@@ -23,7 +23,7 @@
     Id Number: <form:input path="person.idNumber"/><br />
     PESEL: <form:input path="person.pesel"/><br />
     E-mail: <form:input path="person.email"/><br />
-    Password: <form:input path="person.password"/><br />
+    Password: <form:hidden path="person.password"/><br />
 <%--    <form:hidden path="person.homeAddress"/>--%>
 <%--    <form:hidden path="person.workAddress"/>--%>
 

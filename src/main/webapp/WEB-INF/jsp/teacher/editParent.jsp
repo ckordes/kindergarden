@@ -25,7 +25,7 @@
         Id Number: <form:input path="person.idNumber"/><br/>
         PESEL: <form:input path="person.pesel"/><br/>
         E-mail: <form:input path="person.email"/><br/>
-        Password: <form:input path="person.password"/><br/>
+        Password: <form:hidden path="person.password"/><br/>
         Children:
         <form:select path="childList" multiple="true">
             <c:forEach items="${allChildren}" var="child">
