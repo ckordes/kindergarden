@@ -16,13 +16,16 @@
 <%@include file="header.jsp"%>
 
 
-<section>
+<div>
     <h3>General Messages</h3>
     <c:forEach items="${generalInfo}" var="info">
         ${info.message}<br />
         ${info.created}<br />
         <br />
     </c:forEach>
-</section>
+</div>
+
+<%@include file="footer.jsp"%>
+
 </body>
 </html>

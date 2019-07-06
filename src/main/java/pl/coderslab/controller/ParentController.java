@@ -43,7 +43,13 @@ public class ParentController {
         model.addAttribute("childList",childList);
         List<Group> groupList = new ArrayList<>();
         for(Child child : childList){
-            groupList.addAll(child.getGroupList());
+            for (Group group :child.getGroupList()){
+                if (!groupList.contains(group)){
+                    groupList.add(group);
+                }
+            }
+
+//            groupList.addAll(child.getGroupList());
         }
         model.addAttribute("groupList",groupList);
 

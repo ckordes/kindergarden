@@ -12,17 +12,17 @@ public class AuthenticationService {
     @Autowired
     PersonRepository personRepository;
 
-    public boolean givenEmailExistInDatabase(String email){
+    public boolean givenEmailExistInDatabase(String email) {
         Person person = personRepository.findByEmail(email);
-        if (person==null){
+        if (person == null) {
             return false;
         }
         return true;
     }
 
-    public Person checkPasswordForUser(String email, String password){
+    public Person checkPasswordForUser(String email, String password) {
         Person person = personRepository.findByEmail(email);
-        if (person==null){
+        if (person == null) {
             return null;
         }
         boolean equalPassword = password.equals(person.getPassword());
@@ -32,4 +32,16 @@ public class AuthenticationService {
         }
         return null;
     }
+
+    public Person authenticate(String email, String password) {
+        Person person = personRepository.findByEmail(email);
+        if (person != null) {
+            boolean equalPassword = BCrypt.checkpw(password, person.getPassword());
+            if (equalPassword) {
+                return person;
+            }
+        }
+        return null;
+    }
+
 }
