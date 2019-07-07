@@ -4,6 +4,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.GeneralInfo;
 import pl.coderslab.entity.Parent;
@@ -17,6 +18,8 @@ import pl.coderslab.repository.TeacherRepository;
 import pl.coderslab.service.AuthenticationService;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +37,8 @@ public class MainPageController {
     private ParentRepository parentRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private Validator validator;
 
     @ModelAttribute (name = "generalInfo")
     public List<GeneralInfo> generalInfoList(){
@@ -57,7 +62,11 @@ public class MainPageController {
     }
 
     @PostMapping ("/")
-    public String homePage (@ModelAttribute LoginMode loginMode,HttpSession httpSession){
+    public String homePage (@ModelAttribute @Valid LoginMode loginMode, BindingResult bindingResult,Model model, HttpSession httpSession){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("violations",bindingResult.getAllErrors());
+            return "redirect:/";
+        }
        Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());
        if (person == null) {
            return "redirect:/";

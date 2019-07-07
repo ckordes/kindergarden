@@ -1,5 +1,6 @@
 package pl.coderslab.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -27,10 +28,10 @@ public class Person {
     @OneToOne //( cascade = {CascadeType.ALL})
     private Address workAddress;
 
-//    @NotBlank
-//    @Email
+    @NotBlank
+    @Email
     private String email;
-//    @NotBlank
+    @NotBlank
     private String password;
 
 
