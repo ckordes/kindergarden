@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.GeneralInfo;
 import pl.coderslab.entity.Parent;
@@ -64,7 +65,8 @@ public class MainPageController {
     @PostMapping ("/")
     public String homePage (@ModelAttribute @Valid LoginMode loginMode, BindingResult bindingResult,Model model, HttpSession httpSession){
         if (bindingResult.hasErrors()){
-            model.addAttribute("violations",bindingResult.getAllErrors());
+            List<ObjectError> objectErrors = bindingResult.getAllErrors();
+            model.addAttribute("violations",objectErrors);
             return "redirect:/";
         }
        Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());

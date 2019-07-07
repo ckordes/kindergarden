@@ -31,6 +31,7 @@
 
         <c:forEach items="${violations}" var="viol">
             Error: ${viol.field} ${viol.defaultMessage}<br />
+            ${viol}<br />
         </c:forEach>
     </form:form>
 </div>
