@@ -8,6 +8,7 @@ import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
 
 import javax.jws.WebParam;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class ChildController {
     private AddressRepository addressRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private Validator validator;
 
     @ModelAttribute("allChildren")
     public List<Child> allChildren() {

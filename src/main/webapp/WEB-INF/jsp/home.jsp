@@ -18,10 +18,20 @@
 
 
 <div>
+
     <form:form modelAttribute="loginMode" method="post">
         Email: <form:input path="email"/>
+        <form:errors path="email"/><br />
         Password: <form:input path="password"/>
+        <form:errors path="password"/><br />
+        <form:errors path="*"/>
+
         <input type="submit" value="Login">
+
+        <c:forEach items="${violations}" var="viol">
+            Error: ${viol.field} ${viol.defaultMessage}<br />
+            ${viol}<br />
+        </c:forEach>
     </form:form>
 </div>
 

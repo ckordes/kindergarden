@@ -77,23 +77,6 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public GroupConverter getGroupConverter(){return new GroupConverter();}
 
-
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addConverter(getAuthorConverter());
-//        registry.addConverter(getCategoryConverter());
-//    }
-//    @Bean
-//    public AuthorConverter getAuthorConverter() {
-//        return new AuthorConverter();
-//    }
-//
-//    @Bean
-//    public CategoryConverter getCategoryConverter() {
-//        return new CategoryConverter();
-//    }
-//
-
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();
