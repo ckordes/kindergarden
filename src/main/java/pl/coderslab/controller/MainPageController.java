@@ -63,7 +63,7 @@ public class MainPageController {
     }
 
     @PostMapping ("/")
-    public String homePage (@ModelAttribute @Valid LoginMode loginMode, BindingResult bindingResult,Model model, HttpSession httpSession){
+    public String homePage (@ModelAttribute("loginMode") @Valid LoginMode loginMode, BindingResult bindingResult,Model model, HttpSession httpSession){
         if (bindingResult.hasErrors()){
             List<ObjectError> objectErrors = bindingResult.getAllErrors();
             model.addAttribute("violations",objectErrors);
