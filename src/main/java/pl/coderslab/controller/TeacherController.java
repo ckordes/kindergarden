@@ -4,10 +4,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
+import pl.coderslab.validation.AdultValidation;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,12 +82,14 @@ public class TeacherController {
     }
 
     @PostMapping("/addTeacher")
-    public String addTeacher(@ModelAttribute Person person, @RequestParam String streetH, @RequestParam String buildingH,
+    public String addTeacher(@ModelAttribute @Validated(AdultValidation.class) Person person, BindingResult bindingResult, @RequestParam String streetH, @RequestParam String buildingH,
                              @RequestParam String flatH, @RequestParam String zipH, @RequestParam String cityH,
                              @RequestParam String voievodyshipH, @RequestParam String streetW, @RequestParam String buildingW,
                              @RequestParam String flatW, @RequestParam String zipW, @RequestParam String cityW,
                              @RequestParam String voievodyshipW) {
-
+        if(bindingResult.hasErrors()){
+            return "teacher/addTeacher";
+        }
         Address addressH = new Address(true, streetH, buildingH, flatH, Integer.parseInt(zipH), cityH, voievodyshipH);
         Address addressW = new Address(true, streetW, buildingW, flatW, Integer.parseInt(zipW), cityW, voievodyshipW);
         String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
@@ -144,7 +150,10 @@ public class TeacherController {
     }
 
     @PostMapping("/editteacher/{id}")
-    public String editTeacher(@ModelAttribute Teacher teacher, @PathVariable long id) {
+    public String editTeacher(@ModelAttribute @Validated(AdultValidation.class) Teacher teacher,BindingResult bindingResult, @PathVariable long id) {
+        if(bindingResult.hasErrors()){
+            return "teacher/editTeacher";
+        }
         Person person = teacher.getPerson();
         Address homeAddress = person.getHomeAddress();
         Address workAddress = person.getWorkAddress();
@@ -169,7 +178,10 @@ public class TeacherController {
     }
 
     @PostMapping("/addParent")
-    public String addParent(@ModelAttribute Parent parent) {
+    public String addParent(@ModelAttribute ("parent") @Validated(AdultValidation.class) Parent parent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "/teacher/addParent";
+        }
         Person person = parent.getPerson();
         Address homeAddress = parent.getPerson().getHomeAddress();
         Address workAddress = parent.getPerson().getWorkAddress();
@@ -218,7 +230,10 @@ public class TeacherController {
         return "/teacher/editParent";
     }
     @PostMapping("/editparent/{id}")
-    public String editParent(@ModelAttribute Parent parent){
+    public String editParent(@ModelAttribute @Validated(AdultValidation.class) Parent parent,BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "/teacher/editParent";
+        }
         Person person = parent.getPerson();
         Address homeAddress = person.getHomeAddress();
         Address workAddress = person.getWorkAddress();
@@ -239,7 +254,10 @@ public class TeacherController {
     }
 
     @PostMapping("/addGroupInfo/{id}")
-    public String addGroupInfo(@ModelAttribute GroupInfo groupInfo,@PathVariable long id){
+    public String addGroupInfo(@ModelAttribute @Valid GroupInfo groupInfo, BindingResult bindingResult, @PathVariable long id){
+        if (bindingResult.hasErrors()){
+            return "group/addGroupInfo";
+        }
         groupInfo.setCreated(LocalDateTime.now());
         groupInfoRepository.save(groupInfo);
         GroupInfo newGroupInfo = groupInfoRepository.findFirstByOrderByIdDesc();
@@ -267,7 +285,10 @@ public class TeacherController {
     }
 
     @PostMapping("/addGeneralInfo")
-    public String addGeneralInfo(@ModelAttribute GeneralInfo generalInfo){
+    public String addGeneralInfo(@ModelAttribute @Valid GeneralInfo generalInfo,BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "teacher/addGeneralInfo";
+        }
         generalInfo.setCreated(LocalDateTime.now());
         generalInfoRepository.save(generalInfo);
         return "redirect:/teacher/mainPage";

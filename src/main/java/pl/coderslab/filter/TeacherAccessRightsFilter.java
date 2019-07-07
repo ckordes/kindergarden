@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebFilter(filterName = "TeacherFilter", urlPatterns = {"/teacher/*"})
+//@WebFilter(filterName = "TeacherFilter", urlPatterns = {"/teacher/*"})
 public class TeacherAccessRightsFilter implements Filter {
 
     @Override
