@@ -3,11 +3,15 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
 import pl.coderslab.repository.*;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.jws.WebParam;
+import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +67,10 @@ public class ChildController {
     }
 
     @PostMapping("/createChild")
-    public String createChild(@ModelAttribute Child child) {
+    public String createChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "teacher/addChild";
+        }
         Person person = child.getPerson();
         Address address = person.getHomeAddress();
         updateParentRepo(child);
@@ -90,7 +97,10 @@ public class ChildController {
     }
 
     @PostMapping("/editchild/{id}")
-    public String editChild(@ModelAttribute Child child) {
+    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "teacher/editChild";
+        }
         Person person = child.getPerson();
         Address address = person.getHomeAddress();
         updateParentRepo(child);

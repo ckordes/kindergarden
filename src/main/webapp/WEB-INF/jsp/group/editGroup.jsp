@@ -18,8 +18,10 @@
 
 <div>
     <form:form method="post" modelAttribute="group">
-        Name: <form:input path="name"/><br />
-        Description: <form:input path="description"/><br />
+        Name: <form:input path="name"/>
+        <form:errors path="name"/><br/>
+        Description: <form:input path="description"/>
+        <form:errors path="description"/> <br />
         Child List: <form:select path="childList" multiple="true">
             <c:forEach items="${allChildren}" var="child">
                 <option value="${child.id}" ${group.childList.contains(child) ? 'selected="selected"' : ''}>${child.fullName}</option>

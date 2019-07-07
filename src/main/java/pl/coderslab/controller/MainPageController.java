@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.GeneralInfo;
 import pl.coderslab.entity.Parent;
@@ -17,6 +18,7 @@ import pl.coderslab.repository.ParentRepository;
 import pl.coderslab.repository.PersonRepository;
 import pl.coderslab.repository.TeacherRepository;
 import pl.coderslab.service.AuthenticationService;
+import pl.coderslab.validation.AdultValidation;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -67,7 +69,7 @@ public class MainPageController {
         if (bindingResult.hasErrors()){
             List<ObjectError> objectErrors = bindingResult.getAllErrors();
             model.addAttribute("violations",objectErrors);
-            return "redirect:/";
+            return "home";
         }
        Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());
        if (person == null) {
@@ -113,7 +115,10 @@ public class MainPageController {
     }
 
     @PostMapping ("/changePassword")
-    public String changePassword(@ModelAttribute("person") Person person,HttpSession httpSession){
+    public String changePassword(@ModelAttribute("person") @Validated(AdultValidation.class) Person person, BindingResult bindingResult, HttpSession httpSession){
+        if (bindingResult.hasErrors()){
+            return "authentication/changePassword";
+        }
         Parent parent = parentRepository.findById((long) httpSession.getAttribute("id"));
         Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
         if(parent!=null){

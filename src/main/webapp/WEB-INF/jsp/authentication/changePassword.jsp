@@ -39,8 +39,10 @@
     <form:hidden path="workAddress.numberBuilding"/>
     <form:hidden path="workAddress.street"/>
 
-    E-mail: <form:input path="email"/><br />
-    Password: <form:input path="password"/><br />
+    E-mail: <form:input path="email"/>
+    <form:errors path="email"/> <br />
+    Password: <form:input path="password"/>
+    <form:errors path="password"/> <br />
     <input type="submit" value="Save">
 </form:form>
 

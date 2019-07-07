@@ -18,22 +18,36 @@
 
 <div>
     <form:form method="post" modelAttribute="child">
-        First Name: <form:input path="person.firstName"/><br/>
-        Second Name: <form:input path="person.secondName"/><br/>
-        Last Name: <form:input path="person.lastName"/><br/>
-        PESEL: <form:input path="person.pesel"/><br/>
-        ID Number: <form:input path="person.idNumber"/><br/>
-        Start hour: <form:input path="startHour"/><br />
-        End hour: <form:input path="endHour"/><br />
+        First Name: <form:input path="person.firstName"/>
+       <form:errors path="person.firstName"/> <br/>
+        Second Name: <form:input path="person.secondName"/>
+       <form:errors path="person.secondName"/> <br/>
+        Last Name: <form:input path="person.lastName"/>
+       <form:errors path="person.lastName"/> <br/>
+        PESEL: <form:input path="person.pesel"/>
+       <form:errors path="person.pesel"/> <br/>
+        ID Number: <form:input path="person.idNumber"/>
+       <form:errors path="person.idNumber"/> <br/>
+        Start hour: <form:input path="startHour"/>
+       <form:errors path="startHour"/> <br />
+        End hour: <form:input path="endHour"/>
+       <form:errors path="endHour"/> <br />
 
-            Street: <form:input path="person.homeAddress.street"/><br/>
-            Building Number: <form:input path="person.homeAddress.numberBuilding"/><br/>
-            Flat Number: <form:input path="person.homeAddress.numberFlat"/><br/>
-            Zip Code: <form:input path="person.homeAddress.zipCode"/><br/>
-            City: <form:input path="person.homeAddress.city"/><br/>
-            Voievodyship: <form:input path="person.homeAddress.voievodyship"/><br/>
+            Street: <form:input path="person.homeAddress.street"/>
+       <form:errors path="person.homeAddress.street"/> <br/>
+            Building Number: <form:input path="person.homeAddress.numberBuilding"/>
+       <form:errors path="person.homeAddress.numberBuilding"/> <br/>
+            Flat Number: <form:input path="person.homeAddress.numberFlat"/>
+       <form:errors path="person.homeAddress.numberFlat"/> <br/>
+            Zip Code: <form:input path="person.homeAddress.zipCode"/>
+       <form:errors path="person.homeAddress.zipCode"/> <br/>
+            City: <form:input path="person.homeAddress.city"/>
+       <form:errors path="person.homeAddress.city"/> <br/>
+            Voievodyship: <form:input path="person.homeAddress.voievodyship"/>
+       <form:errors path="person.homeAddress.voievodyship"/> <br/>
         Group:
-        <form:select path="groupList" multiple="true" items="${allGroups}" itemValue="id" itemLabel="name"/><br />
+        <form:select path="groupList" multiple="true" items="${allGroups}" itemValue="id" itemLabel="name"/>
+       <form:errors path="groupList"/> <br />
 
         Parents:
 
@@ -41,7 +55,8 @@
                     <c:forEach items="${allParents}" var="parent">
                         <option value="${parent.id}" ${child.parentList.contains(parent) ? 'selected="selected"' : ''}>${parent.person.fullName}</option>
                     </c:forEach>
-                </form:select><br />
+                </form:select>
+       <form:errors path="parentList"/> <br />
 
             Allergies:
             <form:select path="allergieList" items="${allAllergies}" itemLabel="typeOfAllergie" itemValue="id"/><br />

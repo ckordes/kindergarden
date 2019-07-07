@@ -17,18 +17,10 @@ public class Parent {
     @OneToOne(fetch = FetchType.EAGER)
     @NotNull
     private Person person;
-    @NotNull
+    @NotBlank
     private String companyName;
-
-    //    @NotBlank
-//    @Email
-//    @Column(unique = true)
-//    private String email;
-//    @NotBlank
-//    private String password;
     private boolean guardian;
     private boolean allowedToPickUp;
-    @NotEmpty
     @ManyToMany//(fetch = FetchType.EAGER)
     private List<Child> childList;
 

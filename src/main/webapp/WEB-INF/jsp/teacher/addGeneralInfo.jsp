@@ -20,6 +20,7 @@
 <div>
     <form:form method="post" modelAttribute="generalInfo">
         <form:input path="message"/>
+        <form:errors path="message"/>
         <input type="submit" value="Save">
     </form:form>
 </div>

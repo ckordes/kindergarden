@@ -27,14 +27,6 @@ public class ParentController {
     @Autowired
     private ChildRelatedMessagesRepository childRelatedMessagesRepository;
 
-
-
-
-
-
-
-
-
     @RequestMapping("/mainPage")
     public String mainPage(Model model, HttpSession httpSession) {
         long parentId = (long)httpSession.getAttribute("id");
@@ -49,7 +41,6 @@ public class ParentController {
                 }
             }
 
-//            groupList.addAll(child.getGroupList());
         }
         model.addAttribute("groupList",groupList);
 

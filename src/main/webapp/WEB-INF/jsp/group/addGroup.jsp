@@ -16,7 +16,9 @@
 <%@include file="../header.jsp"%>
 <form:form method="post" modelAttribute="group">
     Group name: <form:input path="name"/>
+    <form:errors path="name"/><br/>
     Description: <form:input path="description"/>
+    <form:errors path="description"/><br/>
     <input type="submit" value="Save">
 </form:form>
 
