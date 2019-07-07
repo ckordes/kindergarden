@@ -17,6 +17,7 @@
 <form:form method="post" modelAttribute="groupInfo">
 <%--    <form:hidden path="created"/>--%>
     Message for Group: <form:input path="message"/>
+    <form:errors path="message"/>
     <input type="submit" value="Save">
 </form:form>
 <%@include file="../footer.jsp"%>

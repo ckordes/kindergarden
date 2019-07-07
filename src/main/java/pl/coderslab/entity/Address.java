@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
@@ -10,14 +12,13 @@ public class Address {
     @Id
     @GeneratedValue
     private long id;
-//    @AssertTrue
     private boolean homeWork;
     @NotBlank
     private String street;
     @NotBlank
     private String numberBuilding;
     private String numberFlat;
-//    @NotBlank
+    @NotBlank
     private int zipCode;
     @NotBlank
     private String city;

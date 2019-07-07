@@ -19,13 +19,13 @@
 <div>
 
     <form:form method="post" modelAttribute="person">
-        First Name: <form:input path="firstName"/><br />
-        Second Name: <form:input path="secondName"/><br />
-        Last Name: <form:input path="lastName"/><br />
-        Id Number: <form:input path="idNumber"/><br />
-        PESEL: <form:input path="pesel"/><br />
-        E-mail: <form:input path="email"/><br />
-        Password: <form:input path="password"/><br />
+        First Name: <form:input path="firstName"/><form:errors path="firstName"/> <br />
+        Second Name: <form:input path="secondName"/><form:errors path="secondName"/> <br />
+        Last Name: <form:input path="lastName"/><form:errors path="lastName"/> <br />
+        Id Number: <form:input path="idNumber"/><form:errors path="idNumber"/> <br />
+        PESEL: <form:input path="pesel"/><form:errors path="pesel"/> <br />
+        E-mail: <form:input path="email"/><form:errors path="email"/> <br />
+        Password: <form:input path="password"/><form:errors path="password"/> <br />
         <h3>Home Address</h3><br />
         Street: <input type="text" name="streetH"><br />
         Building number: <input type="text" name="buildingH"><br />

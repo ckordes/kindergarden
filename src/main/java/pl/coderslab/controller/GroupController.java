@@ -3,12 +3,14 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.Child;
 import pl.coderslab.entity.Group;
 import pl.coderslab.entity.Teacher;
 import pl.coderslab.repository.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -60,7 +62,10 @@ public class GroupController {
     }
 
     @PostMapping("/addgroup")
-    public String addGroup(@ModelAttribute Group group) {
+    public String addGroup(@ModelAttribute @Valid Group group, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "/group/addGroup";
+        }
         groupRepository.save(group);
         return "redirect:/teacher/mainPage";
     }
