@@ -3,6 +3,7 @@ package pl.coderslab.entity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validation.AdultValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class Teacher {
     private long id;
 
     @OneToOne//(cascade = {CascadeType.MERGE,CascadeType.REMOVE})//(fetch = FetchType.EAGER)
-    @NotNull
+    @NotNull(groups = AdultValidation.class)
     private Person person;
 
 //    @ManyToMany//(fetch = FetchType.EAGER)

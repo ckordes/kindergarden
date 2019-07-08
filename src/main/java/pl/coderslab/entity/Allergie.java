@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Allergie {
     @JoinTable(name = "child_alergies", joinColumns = @JoinColumn(name = "allergie_id")
             , inverseJoinColumns = @JoinColumn(name = "child_id"))
     private List<Child> childList;
-    @NotBlank
+    @NotBlank (groups = ChildValidation.class)
     private String typeOfAllergie;
 
     public Allergie() {
