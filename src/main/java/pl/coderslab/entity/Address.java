@@ -15,16 +15,16 @@ public class Address {
     @GeneratedValue
     private long id;
     private boolean homeWork;
-    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
+//    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String street;
-    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
+//    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String numberBuilding;
     private String numberFlat;
 //    @Pattern(regexp="\\d{5}")
     private int zipCode;
-    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
+//    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String city;
-    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
+//    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String voievodyship;
 
     public Address() {

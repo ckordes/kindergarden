@@ -2,6 +2,8 @@ package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,11 +16,11 @@ public class Group {
     @GeneratedValue
     private long id;
 
-    @NotBlank
+    @NotBlank //(groups = {AdultValidation.class, ChildValidation.class})
     private String name;
     @ManyToMany//(fetch = FetchType.EAGER)
     private List<Child> childList;
-    @NotBlank
+    @NotBlank//
     private String description;
     @OneToMany//(fetch = FetchType.EAGER)
     private List<GroupInfo> groupInfoList;

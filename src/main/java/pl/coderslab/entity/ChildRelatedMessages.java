@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,7 +14,7 @@ public class ChildRelatedMessages {
     @GeneratedValue
     private long id;
 
-    @NotBlank
+    @NotBlank (groups = {AdultValidation.class, ChildValidation.class})
     private String message;
 
     @ManyToOne//(fetch = FetchType.EAGER)

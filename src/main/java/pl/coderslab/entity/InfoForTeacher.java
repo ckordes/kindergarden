@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.AdultValidation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public class InfoForTeacher {
     @GeneratedValue
     private long id;
 
-    @NotBlank
+    @NotBlank (groups = AdultValidation.class)
     private String message;
 
     @ManyToOne//(fetch = FetchType.EAGER)

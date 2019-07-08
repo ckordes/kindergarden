@@ -3,6 +3,7 @@ package pl.coderslab.entity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validation.AdultValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,9 +16,9 @@ public class Parent {
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @NotNull
+    @NotNull(groups = AdultValidation.class)
     private Person person;
-    @NotBlank
+    @NotBlank(groups = AdultValidation.class)
     private String companyName;
     private boolean guardian;
     private boolean allowedToPickUp;

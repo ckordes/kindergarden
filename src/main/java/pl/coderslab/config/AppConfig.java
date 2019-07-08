@@ -13,6 +13,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.coderslab.converter.*;
@@ -31,11 +32,14 @@ public class AppConfig implements WebMvcConfigurer {
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean emfb = new LocalEntityManagerFactoryBean();
         emfb.setPersistenceUnitName("KinderGardenUnit");
-        return emfb; }
+        return emfb;
+    }
+
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager tm = new JpaTransactionManager(emf);
-        return tm; }
+        return tm;
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -51,7 +55,8 @@ public class AppConfig implements WebMvcConfigurer {
                 new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setSuffix(".jsp");
-        return viewResolver; }
+        return viewResolver;
+    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -62,23 +67,45 @@ public class AppConfig implements WebMvcConfigurer {
         registry.addConverter(getParentConverter());
         registry.addConverter(getGroupConverter());
     }
+
     @Bean
     public ChildConverter getChildConverter() {
         return new ChildConverter();
     }
+
     @Bean
-    public TeacherConverter getTeacherConverter(){return new TeacherConverter();}
+    public TeacherConverter getTeacherConverter() {
+        return new TeacherConverter();
+    }
+
     @Bean
-    public AddressConverter getAddressConverter(){return new AddressConverter();}
+    public AddressConverter getAddressConverter() {
+        return new AddressConverter();
+    }
+
     @Bean
-    public AllergieConverter getAllergieConverter(){return new AllergieConverter();}
+    public AllergieConverter getAllergieConverter() {
+        return new AllergieConverter();
+    }
+
     @Bean
-    public ParentConverter getParentConverter(){return new ParentConverter();}
+    public ParentConverter getParentConverter() {
+        return new ParentConverter();
+    }
+
     @Bean
-    public GroupConverter getGroupConverter(){return new GroupConverter();}
+    public GroupConverter getGroupConverter() {
+        return new GroupConverter();
+    }
 
     @Bean
     public Validator validator() {
         return new LocalValidatorFactoryBean();
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+    }
 }
+

@@ -3,8 +3,11 @@ package pl.coderslab.entity;
 import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2DTM2;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +19,12 @@ public class Child {
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @NotNull
+    @NotNull(groups = ChildValidation.class)
     private Person person;
-    @NotNull
+    @NotNull(groups = ChildValidation.class)
     @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Parent> parentList;
-    @NotEmpty
+    @NotEmpty(groups = ChildValidation.class)
     @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Group> groupList;
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER)
@@ -32,9 +35,11 @@ public class Child {
     private List<Allergie> allergieList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<InfoForTeacher> infoForTeachers;
-    @NotBlank
+    //    @NotBlank(groups = ChildValidation.class)
+    @Digits(integer = 6, fraction = 0)
     private double startHour;
-    @NotBlank
+    //    @NotBlank(groups = ChildValidation.class)
+    @Digits(integer = 6, fraction = 0)
     private double endHour;
 
     public Child() {
@@ -151,9 +156,9 @@ public class Child {
         return Objects.hash(id);
     }
 
-    public Child(Child that){
-        this(that.getPerson(),that.getParentList(),that.getGroupList(),that.getPaymentList(),that.getChildRelatedMessagesList(),
-                that.getAllergieList(),that.getInfoForTeachers(),that.getStartHour(),that.getEndHour());
+    public Child(Child that) {
+        this(that.getPerson(), that.getParentList(), that.getGroupList(), that.getPaymentList(), that.getChildRelatedMessagesList(),
+                that.getAllergieList(), that.getInfoForTeachers(), that.getStartHour(), that.getEndHour());
     }
 }
 

@@ -10,10 +10,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Welcome in kindergarden</title>
 </head>
-<body>
+<body class="container">
 
+<div class="main">
 <h2>Kindergarden</h2>
 
 <div>
@@ -29,6 +31,7 @@
     </form:form>
 </div>
 
+</div>
 <div>
     <h3>General Messages</h3>
     <c:forEach items="${generalInfo}" var="info">
