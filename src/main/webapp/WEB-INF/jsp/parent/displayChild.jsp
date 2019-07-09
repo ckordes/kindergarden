@@ -10,9 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Display Child</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 
@@ -23,11 +24,17 @@
 </form:form>
 
 <h4>Display Child Informations</h4>
-<c:forEach items="${child.childRelatedMessagesList}" var="message">
-    Message: ${message.message}<br />
-    Created: ${message.created}<br />
-    <br />
-</c:forEach>
+<table>
+    <c:forEach items="${child.childRelatedMessagesList}" var="message">
+        <tr>
+            <td>
+                Message: ${message.message}<br />
+                Created: ${message.created}
+            </td>
+        </tr>
+    </c:forEach>
+</table><br/>
+
 
 <%@include file="../footer.jsp"%>
 

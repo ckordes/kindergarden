@@ -14,34 +14,37 @@
     <title>Welcome in kindergarden</title>
 </head>
 <body class="container">
-
 <div class="main">
-<h2>Kindergarden</h2>
-
-<div>
+    <h2>Kindergarden</h2>
 
     <form:form modelAttribute="loginMode" method="post">
         Email: <form:input path="email"/>
-        <form:errors path="email"/><br />
+        <form:errors path="email"/><br/>
         Password: <form:input path="password"/>
-        <form:errors path="password"/><br />
+        <form:errors path="password"/><br/>
 
         <input type="submit" value="Login">
 
     </form:form>
 </div>
 
-</div>
-<div>
+<div class="general">
     <h3>General Messages</h3>
-    <c:forEach items="${generalInfo}" var="info">
-        ${info.message}<br />
-        ${info.created}<br />
-        <br />
-    </c:forEach>
+    <table class="table">
+
+        <c:forEach items="${generalInfo}" var="info">
+            <tr>
+                <td>
+                    Message: ${info.message}<br/>
+                    Created: ${info.created}<br/>
+                    <br/>
+                </td>
+            </tr>
+        </c:forEach>
+
+    </table>
 </div>
 
-<%@include file="footer.jsp"%>
-
+<%@include file="footer.jsp" %>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<footer>
+<footer class="footer">
     Public Kindergarden number 4<br />
     Street<br />
     Postal Code<br />

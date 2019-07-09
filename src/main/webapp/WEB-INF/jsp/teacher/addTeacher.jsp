@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: baltazar
@@ -9,9 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Add Teacher</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 

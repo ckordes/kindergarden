@@ -9,31 +9,50 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Display Group</title>
 </head>
-<body>
-<%@include file="../header.jsp"%>
-<div>
-    <h5>Children in groups</h5>
-<c:forEach items="${group.childList}" var="child">
-   Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel} <a href="../../parent/displayChild/${child.id}">Display Child Info</a> <br/>
-</c:forEach>
-</div>
-<div>
-    <a href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a>
-</div>
-<div>
-<a href="/kindergarden_war_exploded/teacher/addGroupInfo/${group.id}">Add Info For Whole Group</a>
-</div>
-<div>
-    <h5>Group Messages</h5>
-    <c:forEach items="${group.groupInfoList}" var="info">
-        Message: ${info.message}<br/>
-        Created: ${info.created}<br/>
-    </c:forEach>
-</div>
+<body class="container">
+<%@include file="../header.jsp" %>
+<div class="general">
+    <h4>Children in groups</h4>
+    <table>
+        <c:forEach items="${group.childList}" var="child">
+            <tr class="backColor">
+                <td>
+                    Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel} <a
+                        href="../../parent/displayChild/${child.id}">Display Child Info</a> <br/>
+                </td>
+            </tr>
+        </c:forEach>
 
-<%@include file="../footer.jsp"%>
+    </table>
+
+
+    <div>
+        <span class="backColor"> <a
+                href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a></span>
+    </div>
+    <div>
+        <span class="backColor"><a href="/kindergarden_war_exploded/teacher/addGroupInfo/${group.id}">Add Info For Whole Group</a></span>
+    </div>
+    <div>
+        <h4 class="backColor" style="width: 150px;">Group Messages</h4>
+        <table>
+            <c:forEach items="${group.groupInfoList}" var="info">
+                <tr class="backColor">
+                    <td>
+                        Message: ${info.message}<br/>
+                        Created: ${info.created}<br/>
+                    </td>
+                </tr>
+
+            </c:forEach>
+        </table>
+
+    </div>
+</div>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

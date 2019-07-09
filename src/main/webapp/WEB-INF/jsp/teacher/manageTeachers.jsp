@@ -9,26 +9,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Manage Teachers</title>
 </head>
-<body>
+<body class="container">
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
+<div class="general">
+    <div>
+        <a href="addTeacher">Create Teacher</a><br/>
+    </div>
 
-<div>
-    <a href="addTeacher">Create Teacher</a><br />
+    <div>
+        <h4>Teachers List</h4><br/>
+        <table>
+            <c:forEach items="${allTeachers}" var="teacher">
+                <tr class="backColor">
+                    <td>
+                        <a href="editteacher/${teacher.id}">Edit teacher: ${teacher.person.fullName}</a>
+                    </td>
+                    <td>
+                        <a href="deleteTeacher/${teacher.id}">Delete teacher</a><br/>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
-
-<div>
-    <h4>Teachers List</h4><br />
-    <c:forEach items="${allTeachers}" var="teacher">
-        <a href="editteacher/${teacher.id}">Edit teacher: ${teacher.person.fullName}</a>
-        <a href="deleteTeacher/${teacher.id}">Delete teacher: ${teacher.person.fullName}</a><br />
-
-    </c:forEach>
-</div>
-
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

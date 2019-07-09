@@ -9,9 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Manage Parents</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 
@@ -25,6 +26,7 @@
         <a href="editparent/${parent.id}">Edit ${parent.person.fullName}</a>
         <a href="deleteparent/${parent.id}">Delete ${parent.person.fullName}</a><br />
     </c:forEach>
+    <br/>
 </div>
 
 <%@include file="../footer.jsp"%>

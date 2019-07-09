@@ -10,13 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Add Parent</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 
-<h1>Add Teacher</h1>
+<h3>Add Parent</h3>
 <div>
 
     <form:form method="post" modelAttribute="parent">

@@ -10,12 +10,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Edit Child</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
-
+<h4>Edit Child</h4>
 <form:form method="post" modelAttribute="child">
     First Name: <form:input path="person.firstName"/>
     <form:errors path="person.firstName"/> <br/>
@@ -31,7 +32,7 @@
    <form:errors path="startHour"/> <br />
     End hour: <form:input path="endHour"/>
    <form:errors path="endHour"/> <br />
-
+<h4>Child Address</h4>
     Street: <form:input path="person.homeAddress.street"/>
    <form:errors path="person.homeAddress.street"/> <br/>
     Building Number: <form:input path="person.homeAddress.numberBuilding"/>
@@ -44,6 +45,7 @@
    <form:errors path="person.homeAddress.city"/> <br/>
     Voievodyship: <form:input path="person.homeAddress.voievodyship"/>
    <form:errors path="person.homeAddress.voievodyship"/> <br/>
+    <h4>Groups, Parents, Allergies</h4>
     Group:
     <form:select path="groupList" multiple="true" items="${allGroups}" itemValue="id" itemLabel="name"/>
    <form:errors path="groupList"/> <br />
