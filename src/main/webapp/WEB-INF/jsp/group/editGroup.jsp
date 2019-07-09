@@ -10,13 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Edit Group</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 
-<div>
+<div class="general">
     <form:form method="post" modelAttribute="group">
         Name: <form:input path="name"/>
         <form:errors path="name"/><br/>

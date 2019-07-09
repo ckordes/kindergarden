@@ -10,13 +10,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Edit Teacher</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp" %>
 
 <form:form modelAttribute="teacher" method="post">
+    <br/>
+    <h4>Personal Data</h4>
     First Name: <form:input path="person.firstName"/><form:errors path="person.firstName"/> <br/>
     Second Name: <form:input path="person.secondName"/><form:errors path="person.secondName"/> <br/>
     Last Name: <form:input path="person.lastName"/><form:errors path="person.lastName"/> <br/>

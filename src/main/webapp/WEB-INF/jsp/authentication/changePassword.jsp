@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: baltazar
@@ -9,11 +10,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Change Mail or Password</title>
 </head>
-<body>
+<body class="container">
 <%@include file="../header.jsp"%>
-
+<h4>Change Password and Email</h4>
+<div style="background: red; width: 300px;">Don't forget to change password</div>
 <form:form method="post" modelAttribute="person">
     <form:hidden path="id"/>
     <form:hidden path="pesel"/>

@@ -10,13 +10,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Add Child</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
 
 <div>
+    <h4>Create Child</h4>
     <form:form method="post" modelAttribute="child">
         First Name: <form:input path="person.firstName"/>
        <form:errors path="person.firstName"/> <br/>

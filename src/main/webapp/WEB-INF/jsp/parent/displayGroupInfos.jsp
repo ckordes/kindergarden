@@ -9,17 +9,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Display Group Infos</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp"%>
-
+<div>
 <h4>Group Info List</h4>
-<c:forEach items="${group.groupInfoList}" var="info">
-    ${info.created}, ${info.message}<br />
-    <br />
-</c:forEach>
+<table>
+    <c:forEach items="${group.groupInfoList}" var="info">
+        <tr>
+            <td>
+                Message: ${info.message}<br/>
+                Created: ${info.created}
+            </td>
+        </tr>
+    </c:forEach>
+
+</table><br/>
+</div>
 
 <%@include file="../footer.jsp"%>
 

@@ -10,9 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Add General Info</title>
 </head>
-<body>
+<body class="container">
 
 <%@include file="../header.jsp" %>
 
@@ -27,11 +28,22 @@
 
 <div>
     <h3>General Messages</h3>
-    <c:forEach items="${allGeneralInfos}" var="info">
-        ${info.message}<br/>
-        ${info.created} <a href="deleteGeneralInfo/${info.id}">Delete General Info</a>
-        <br/>
-    </c:forEach>
+    <table>
+        <c:forEach items="${allGeneralInfos}" var="info">
+            <tr>
+                <td>
+                   Message: ${info.message}<br/>
+                   Created: ${info.created}
+                </td>
+                <td>
+                    <a href="deleteGeneralInfo/${info.id}">Delete General Info</a>
+                </td>
+            </tr>
+
+        </c:forEach>
+
+    </table>
+
 </div>
 
 
