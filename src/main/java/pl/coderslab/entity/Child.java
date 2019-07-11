@@ -22,12 +22,12 @@ public class Child {
     @NotNull(groups = ChildValidation.class)
     private Person person;
     @NotNull(groups = ChildValidation.class)
-    @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
+    @ManyToMany(mappedBy = "childList")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Parent> parentList;
     @NotEmpty(groups = ChildValidation.class)
-    @ManyToMany(mappedBy = "childList", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
+    @ManyToMany(mappedBy = "childList")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Group> groupList;
-    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL)//,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "child")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER)
     private List<Payment> paymentList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<ChildRelatedMessages> childRelatedMessagesList;
