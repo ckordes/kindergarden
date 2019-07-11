@@ -73,12 +73,11 @@ public class ChildController {
         }
         Person person = child.getPerson();
         Address address = person.getHomeAddress();
-        updateParentRepo(child);
-        updateGroupRepo(child);
-
         addressRepository.save(address);
         personRepository.save(person);
         childRepository.save(child);
+        updateParentRepo(child);
+        updateGroupRepo(child);
         return "redirect:/teacher/mainPage";
     }
 
@@ -91,46 +90,49 @@ public class ChildController {
     @GetMapping("/editchild/{id}")
     public String editChild(@PathVariable long id, Model model) {
         Child child = childRepository.findById(id);
+        Child tempChild = new Child(child);
         model.addAttribute("child", child);
+        model.addAttribute("tempChild",tempChild);
 
         return "teacher/editChild";
     }
 
     @PostMapping("/editchild/{id}")
-    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
+    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult,@ModelAttribute("tempChild")Child tempChild) {
         if(bindingResult.hasErrors()){
             return "teacher/editChild";
         }
         Person person = child.getPerson();
         Address address = person.getHomeAddress();
-        updateParentRepo(child);
-        updateGroupRepo(child);
-
         addressRepository.save(address);
         personRepository.save(person);
         childRepository.save(child);
+        updateParentRepo(child);
+        updateGroupRepo(child);
         return "redirect:/teacher/mainPage";
     }
 
     private void updateParentRepo(Child child) {
         for (Parent parent : child.getParentList()) {
-            List<Child> childList = parent.getChildList();
+            Parent tempParent = parentRepository.findById(parent.getId());
+            List<Child> childList = tempParent.getChildList();
             if (!childList.contains(child)) {
                 childList.add(child);
             }
-            parent.setChildList(childList);
-            parentRepository.save(parentRepository.findById(parent.getId()));
+            tempParent.setChildList(childList);
+            parentRepository.save(tempParent);
         }
     }
 
     private void updateGroupRepo(Child child) {
         for (Group group : child.getGroupList()) {
-            List<Child> groupList = new ArrayList<>();
+            Group tempGroup = groupRepository.findById(group.getId());
+            List<Child> groupList = tempGroup.getChildList();
             if (!groupList.contains(child)) {
                 groupList.add(child);
             }
-            group.setChildList(groupList);
-            groupRepository.save(groupRepository.findById(group.getId()));
+            tempGroup.setChildList(groupList);
+            groupRepository.save(tempGroup);
         }
     }
 
