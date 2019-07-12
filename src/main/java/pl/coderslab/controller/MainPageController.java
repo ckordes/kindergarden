@@ -12,6 +12,7 @@ import pl.coderslab.entity.GeneralInfo;
 import pl.coderslab.entity.Parent;
 import pl.coderslab.entity.Person;
 import pl.coderslab.entity.Teacher;
+import pl.coderslab.pojo.EmailServiceImpl;
 import pl.coderslab.pojo.LoginMode;
 import pl.coderslab.repository.GeneralInfoRepository;
 import pl.coderslab.repository.ParentRepository;
@@ -42,6 +43,8 @@ public class MainPageController {
     private PersonRepository personRepository;
     @Autowired
     private Validator validator;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @ModelAttribute (name = "generalInfo")
     public List<GeneralInfo> generalInfoList(){
@@ -71,6 +74,9 @@ public class MainPageController {
             model.addAttribute("violations",objectErrors);
             return "home";
         }
+
+//        emailService.sendSimpleMessage("ckordes@gmail.com","test","test");
+
        Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());
        if (person == null) {
            return "redirect:/";
@@ -123,6 +129,7 @@ public class MainPageController {
         Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
         if(parent!=null){
             String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+            emailService.sendSimpleMessage(person.getEmail(),"Change Password","You have changed the password. \n New password is: "+person.getPassword());
             person.setPassword(hashedPassword);
             personRepository.save(person);
             parent.setPerson(person);
@@ -130,6 +137,7 @@ public class MainPageController {
             return "redirect:/";
         }else {
             String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+            emailService.sendSimpleMessage(person.getEmail(),"Change Password","You have changed the password. \n New password is: "+person.getPassword());
             person.setPassword(hashedPassword);
             personRepository.save(person);
             teacher.setPerson(person);

@@ -5,12 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
+import pl.coderslab.pojo.EmailServiceImpl;
 import pl.coderslab.repository.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/parent")
@@ -26,6 +29,8 @@ public class ParentController {
     private GroupRepository groupRepository;
     @Autowired
     private ChildRelatedMessagesRepository childRelatedMessagesRepository;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @RequestMapping("/mainPage")
     public String mainPage(Model model, HttpSession httpSession) {
@@ -67,6 +72,21 @@ public class ParentController {
     @PostMapping ("/displayChild/{id}")
     public String displayChild(@PathVariable long id, @ModelAttribute ChildRelatedMessages childRelatedMessages){
         Child child = childRepository.findById(id);
+        //adding email sending functionality
+        Set<Person> personSet = new HashSet<>();
+        for (Parent parent : child.getParentList()){
+            personSet.add(parent.getPerson());
+        }
+        for (Group group : child.getGroupList()){
+            for(Teacher teacher : group.getTeacherList()){
+                personSet.add(teacher.getPerson());
+            }
+        }
+        for (Person person :personSet){
+            emailService.sendSimpleMessage(person.getEmail(),"New information related "+ child.getFullName(),
+                    childRelatedMessages.getMessage());
+        }
+
         childRelatedMessages.setCreated(LocalDateTime.now());
         childRelatedMessages.setChild(child);
         childRelatedMessagesRepository.save(childRelatedMessages);
