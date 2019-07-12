@@ -8,15 +8,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
+import pl.coderslab.pojo.EmailService;
+import pl.coderslab.pojo.EmailServiceImpl;
 import pl.coderslab.repository.*;
 import pl.coderslab.validation.AdultValidation;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/teacher")
@@ -38,6 +37,8 @@ public class TeacherController {
     private PersonRepository personRepository;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @ModelAttribute("allGroups")
     public List<Group> allGroups() {
@@ -92,6 +93,8 @@ public class TeacherController {
         }
         Address addressH = new Address(true, streetH, buildingH, flatH, Integer.parseInt(zipH), cityH, voievodyshipH);
         Address addressW = new Address(true, streetW, buildingW, flatW, Integer.parseInt(zipW), cityW, voievodyshipW);
+        emailService.sendSimpleMessage(person.getEmail(),"Kindergarden infor: user created","You have been added to teacher list. Default password is: "+
+                person.getPassword()+" \n Please change your current password!");
         String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
         person.setPassword(hashedPassword);
 
@@ -183,6 +186,8 @@ public class TeacherController {
             return "/teacher/addParent";
         }
         Person person = parent.getPerson();
+        emailService.sendSimpleMessage(person.getEmail(),"Kindergarden infor: user created","You have been added to teacher list. Default password is: "+
+                person.getPassword()+" \n Please change your current password!");
         Address homeAddress = parent.getPerson().getHomeAddress();
         Address workAddress = parent.getPerson().getWorkAddress();
         addressRepository.save(homeAddress);
@@ -265,6 +270,17 @@ public class TeacherController {
         List<GroupInfo> groupInfoList = group.getGroupInfoList();
         groupInfoList.add(newGroupInfo);
         groupRepository.save(group);
+        //adding functionality to send mail when new group info is being created
+        Set<Person> personList = new HashSet<>();
+        for(Child child:group.getChildList()){
+            for(Parent parent: child.getParentList()){
+                personList.add(parent.getPerson());
+            }
+        }
+        for(Person person: personList){
+            emailService.sendSimpleMessage(person.getEmail(),"New Group Info", groupInfo.getMessage());
+        }
+
         String retrunString= "/group/displayGroup/"+String.valueOf(id);
         return "redirect:"+retrunString;
     }
