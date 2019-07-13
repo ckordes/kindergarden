@@ -1,8 +1,7 @@
 package pl.coderslab.entity;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validation.AdultValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,20 +14,12 @@ public class Parent {
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @NotNull
+    @NotNull(groups = AdultValidation.class)
     private Person person;
-    @NotNull
+    @NotBlank(groups = AdultValidation.class)
     private String companyName;
-
-    //    @NotBlank
-//    @Email
-//    @Column(unique = true)
-//    private String email;
-//    @NotBlank
-//    private String password;
     private boolean guardian;
     private boolean allowedToPickUp;
-    @NotEmpty
     @ManyToMany//(fetch = FetchType.EAGER)
     private List<Child> childList;
 
@@ -83,7 +74,26 @@ public class Parent {
         this.id = id;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return this.person.getFullName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Parent parent = (Parent) obj;
+        return id == parent.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "id=" + id +
+                ", person=" + person +
+                ", companyName='" + companyName + '\'' +
+                ", guardian=" + guardian +
+                ", allowedToPickUp=" + allowedToPickUp +
+                '}';
     }
 }

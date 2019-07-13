@@ -10,38 +10,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/main.css"/>">
     <title>Welcome in kindergarden</title>
 </head>
-<body>
-<header>
-    <h1>Kindergarden</h1>
-</header>
+<body class="container">
+<div class="main">
+    <h2>Kindergarden</h2>
 
-
-
-<aside>
     <form:form modelAttribute="loginMode" method="post">
         Email: <form:input path="email"/>
-        Password: <form:input path="password"/>
-        <input type="submit" value="Login">
-    </form:form>
-</aside>
+        <form:errors path="email"/><br/>
+        Password: <form:password path="password"/>
+        <form:errors path="password"/><br/>
 
-<section>
+        <input type="submit" value="Login">
+
+    </form:form>
+</div>
+
+<div class="general">
     <h3>General Messages</h3>
-    <c:forEach items="${generalInfo}" var="info">
-        ${info.message}<br />
-        ${info.created}<br />
-        <br />
-    </c:forEach>
-</section>
-<footer>
-    Public Kindergarden number 4<br />
-    Street<br />
-    Postal Code<br />
-    City<br />
-    Telephone number<br />
-    <a href="/kindergarden_war_exploded/">Home Page</a>
-</footer>
+    <table class="table">
+
+        <c:forEach items="${generalInfo}" var="info">
+            <tr>
+                <td>
+                    Message: ${info.message}<br/>
+                    Created: ${info.created}<br/>
+                    <br/>
+                </td>
+            </tr>
+        </c:forEach>
+
+    </table>
+</div>
+
+<%@include file="footer.jsp" %>
 </body>
 </html>

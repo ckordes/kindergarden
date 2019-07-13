@@ -1,15 +1,20 @@
 package pl.coderslab.controller;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
+import pl.coderslab.pojo.EmailServiceImpl;
 import pl.coderslab.repository.*;
+import pl.coderslab.validation.AdultValidation;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 @RequestMapping("/teacher")
@@ -31,6 +36,8 @@ public class TeacherController {
     private PersonRepository personRepository;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @ModelAttribute("allGroups")
     public List<Group> allGroups() {
@@ -56,6 +63,17 @@ public class TeacherController {
         return parentList;
     }
 
+    @ModelAttribute(name = "allGeneralInfos")
+    public List<GeneralInfo> allGeneralInfos() {
+        List<GeneralInfo> generalInfoList = generalInfoRepository.findAll();
+        ;
+        if (generalInfoList == null) {
+            generalInfoList = new ArrayList<>();
+        }
+        Collections.reverse(generalInfoList);
+        return generalInfoList;
+    }
+
     @RequestMapping("/mainPage")
     public String mainPage() {
         return "teacher/mainTPage";
@@ -69,21 +87,22 @@ public class TeacherController {
     }
 
     @PostMapping("/addTeacher")
-    public String addTeacher(@ModelAttribute Person person, @RequestParam String streetH, @RequestParam String buildingH,
-                             @RequestParam String flatH, @RequestParam String zipH, @RequestParam String cityH,
-                             @RequestParam String voievodyshipH, @RequestParam String streetW, @RequestParam String buildingW,
-                             @RequestParam String flatW, @RequestParam String zipW, @RequestParam String cityW,
-                             @RequestParam String voievodyshipW) {
-
-        Address addressH = new Address(true, streetH, buildingH, flatH, Integer.parseInt(zipH), cityH, voievodyshipH);
-        Address addressW = new Address(true, streetW, buildingW, flatW, Integer.parseInt(zipW), cityW, voievodyshipW);
+    public String addTeacher(@ModelAttribute @Validated(AdultValidation.class) Person person, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "teacher/addTeacher";
+        }
+        Address addressH = person.getHomeAddress(); //new Address(true, streetH, buildingH, flatH, Integer.parseInt(zipH), cityH, voievodyshipH);
+        Address addressW = person.getWorkAddress(); //new Address(true, streetW, buildingW, flatW, Integer.parseInt(zipW), cityW, voievodyshipW);
+        emailService.sendSimpleMessage(person.getEmail(), "Kindergarden infor: user created", "You have been added to teacher list. Default password is: " +
+                person.getPassword() + " \n Please change your current password!");
+        String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+        person.setPassword(hashedPassword);
 
         addressRepository.save(addressH);
         addressRepository.save(addressW);
         person.setWorkAddress(addressW);
         person.setHomeAddress(addressH);
         personRepository.save(person);
-
 
         Teacher teacher = new Teacher();
         teacher.setPerson(person);
@@ -133,7 +152,10 @@ public class TeacherController {
     }
 
     @PostMapping("/editteacher/{id}")
-    public String editTeacher(@ModelAttribute Teacher teacher, @PathVariable long id) {
+    public String editTeacher(@ModelAttribute @Validated(AdultValidation.class) Teacher teacher, BindingResult bindingResult, @PathVariable long id) {
+        if (bindingResult.hasErrors()) {
+            return "teacher/editTeacher";
+        }
         Person person = teacher.getPerson();
         Address homeAddress = person.getHomeAddress();
         Address workAddress = person.getWorkAddress();
@@ -158,12 +180,19 @@ public class TeacherController {
     }
 
     @PostMapping("/addParent")
-    public String addParent(@ModelAttribute Parent parent) {
+    public String addParent(@ModelAttribute("parent") @Validated(AdultValidation.class) Parent parent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/teacher/addParent";
+        }
         Person person = parent.getPerson();
+        emailService.sendSimpleMessage(person.getEmail(), "Kindergarden infor: user created", "You have been added to teacher list. Default password is: " +
+                person.getPassword() + " \n Please change your current password!");
         Address homeAddress = parent.getPerson().getHomeAddress();
         Address workAddress = parent.getPerson().getWorkAddress();
         addressRepository.save(homeAddress);
         addressRepository.save(workAddress);
+        String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
+        person.setPassword(hashedPassword);
         personRepository.save(person);
         parentRepository.save(parent);
         return "redirect:/teacher/mainPage";
@@ -175,12 +204,11 @@ public class TeacherController {
         Person person = parent.getPerson();
         Address homeAddress = person.getHomeAddress();
         Address workAddress = person.getWorkAddress();
-        Child child;
         List<Child> childList = parent.getChildList();
-        for(Child childLoop : childList){
+        for (Child childLoop : childList) {
             List<Parent> parentsLoop = childLoop.getParentList();
-            for (Parent parentLoop : parentsLoop){
-                if (parent.getId()== parentLoop.getId()){
+            for (Parent parentLoop : parentsLoop) {
+                if (parent.getId() == parentLoop.getId()) {
                     parentsLoop.remove(parent);
                     childRepository.save(childLoop);
                     break;
@@ -199,13 +227,17 @@ public class TeacherController {
     }
 
     @GetMapping("/editparent/{id}")
-    public String editParent(@PathVariable long id, Model model){
+    public String editParent(@PathVariable long id, Model model) {
         Parent parent = parentRepository.findById(id);
-        model.addAttribute("parent",parent);
+        model.addAttribute("parent", parent);
         return "/teacher/editParent";
     }
+
     @PostMapping("/editparent/{id}")
-    public String editParent(@ModelAttribute Parent parent){
+    public String editParent(@ModelAttribute @Validated(AdultValidation.class) Parent parent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/teacher/editParent";
+        }
         Person person = parent.getPerson();
         Address homeAddress = person.getHomeAddress();
         Address workAddress = person.getWorkAddress();
@@ -214,5 +246,69 @@ public class TeacherController {
         personRepository.save(person);
         parentRepository.save(parent);
         return "redirect:/teacher/mainPage";
+    }
+
+    @GetMapping("/addGroupInfo/{id}")
+    public String addGroupInfo(@PathVariable long id, Model model) {
+        GroupInfo groupInfo = new GroupInfo();
+        model.addAttribute("groupInfo", groupInfo);
+        return "group/addGroupInfo";
+    }
+
+    @PostMapping("/addGroupInfo/{id}")
+    public String addGroupInfo(@ModelAttribute @Valid GroupInfo groupInfo, BindingResult bindingResult, @PathVariable long id) {
+        if (bindingResult.hasErrors()) {
+            return "group/addGroupInfo";
+        }
+        groupInfo.setCreated(LocalDateTime.now());
+        groupInfoRepository.save(groupInfo);
+        GroupInfo newGroupInfo = groupInfoRepository.findFirstByOrderByIdDesc();
+        Group group = groupRepository.findById(id);
+        List<GroupInfo> groupInfoList = group.getGroupInfoList();
+        groupInfoList.add(newGroupInfo);
+        groupRepository.save(group);
+        //adding functionality to send mail when new group info is being created
+        Set<Person> personList = new HashSet<>();
+        for (Child child : group.getChildList()) {
+            for (Parent parent : child.getParentList()) {
+                personList.add(parent.getPerson());
+            }
+        }
+        for (Person person : personList) {
+            emailService.sendSimpleMessage(person.getEmail(), "New Group Info", groupInfo.getMessage());
+        }
+
+        String retrunString = "/group/displayGroup/" + String.valueOf(id);
+        return "redirect:" + retrunString;
+    }
+
+    @RequestMapping("/childInfo/{id}")
+    public String childInfo(@PathVariable long id, Model model) {
+        Child child = childRepository.findById(id);
+        model.addAttribute("child", child);
+        return "parent/displayChildInfos";
+    }
+
+    @GetMapping("/addGeneralInfo")
+    public String addGeneralInfo(Model model) {
+        GeneralInfo generalInfo = new GeneralInfo();
+        model.addAttribute("generalInfo", generalInfo);
+        return "teacher/addGeneralInfo";
+    }
+
+    @PostMapping("/addGeneralInfo")
+    public String addGeneralInfo(@ModelAttribute @Valid GeneralInfo generalInfo, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "teacher/addGeneralInfo";
+        }
+        generalInfo.setCreated(LocalDateTime.now());
+        generalInfoRepository.save(generalInfo);
+        return "redirect:/teacher/mainPage";
+    }
+
+    @RequestMapping("/deleteGeneralInfo/{id}")
+    public String deleteGeneralInfo(@PathVariable long id) {
+        generalInfoRepository.delete(id);
+        return "redirect:/teacher/addGeneralInfo";
     }
 }

@@ -1,9 +1,14 @@
 package pl.coderslab.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.pl.PESEL;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -12,27 +17,30 @@ public class Person {
     @GeneratedValue
     private long id;
 
-    @NotBlank
+    @Column(unique = true)
+    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
+    @PESEL(groups = {ChildValidation.class, AdultValidation.class})
     private String pesel;
-    @NotBlank
+    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String firstName;
     private String secondName;
-    @NotBlank
+    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String lastName;
-
+    @NotBlank(groups = AdultValidation.class)
     private String idNumber;
-
+    @NotNull(groups = {ChildValidation.class, AdultValidation.class})
     @OneToOne //( cascade = {CascadeType.ALL})
     private Address homeAddress;
+    @NotNull(groups = AdultValidation.class)
     @OneToOne //( cascade = {CascadeType.ALL})
     private Address workAddress;
 
-//    @NotBlank
-//    @Email
+    @NotBlank(groups = AdultValidation.class)
+    @Email(groups = AdultValidation.class)
+    @Column(unique = true)
     private String email;
-//    @NotBlank
+    @NotBlank(groups = AdultValidation.class)
     private String password;
-
 
     public Person() {
     }
@@ -117,23 +125,21 @@ public class Person {
         this.id = id;
     }
 
-    public String getFullName(){
-        return this.getFirstName() +" "+this.getLastName();
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", pesel='" + pesel + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
-
-/*
-Parent:
-Pesel
-Numer dowodu
-Imie
-Drugie Imie
-Nazwisko
-Adres zamieszkania
-Zaklad pracy
-Telefon kontaktowy (lista)
-Email
-Rodzic/opiekun (true/false)
-Dziecko (lista)
-Allowed (czy moze odebrac z przedszkola czy nie)
- */

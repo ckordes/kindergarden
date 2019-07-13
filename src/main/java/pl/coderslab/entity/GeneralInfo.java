@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,7 @@ public class GeneralInfo {
     @GeneratedValue
     private long id;
 
-
-    @NotBlank
+    @NotBlank// (groups = {AdultValidation.class, ChildValidation.class})
     private String message;
 
     private LocalDateTime created;

@@ -1,0 +1,51 @@
+/*https://pl.imgbb.com/*/
+
+.container {
+    width: 960px;
+    margin: auto;
+}
+
+.main {
+    /*background-image: url("https://www.miracle-recreation.com/content/uploads/2018/11/Image-Header_Park.jpg");*/
+    background-image: url("http://ragdoodles.com/wp-content/uploads/2014/01/Crayons-Background1.jpg");
+    /*background-image: url("https://i.ibb.co/ggJbq9D/kindergarden.jpg");*/
+    width: 960px;
+    height: 250px;
+    /*background-color: #cccccc;*/
+}
+
+
+.general {
+    /*background-image: url("http://p7cdn4static.sharpschool.com/UserFiles/Servers/Server_524047/Image/coloredpencils.jpg");*/
+    background-image: url("https://i.ibb.co/sCVsD89/coloredpencils.jpg");
+    width: 960px;
+    height: 950px;
+    background-color: aquamarine;
+}
+
+.footer {
+    /*background-image: url("http://ragdoodles.com/wp-content/uploads/2014/01/Crayons-Background1.jpg");*/
+    width: 960px;
+    height: 150px;
+    background-image: url("https://i.ibb.co/Pg73fMP/crayDown.jpg");
+    /*background-color: aqua;*/
+
+}
+
+.header {
+    background-image: url("http://ragdoodles.com/wp-content/uploads/2014/01/Crayons-Background1.jpg");
+    width: 960px;
+    height: 150px;
+}
+
+.table {
+    width: 600px;
+}
+
+table, tr, td {
+    border: 1px solid black;
+}
+
+.backColor {
+    background-color: aquamarine;
+}

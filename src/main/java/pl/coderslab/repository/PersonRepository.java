@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.entity.Person;
 
 @Repository
-public interface PersonRepository  extends JpaRepository<Person,Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
     Person findByEmail(String email);
 }

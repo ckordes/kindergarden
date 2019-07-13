@@ -1,9 +1,9 @@
 package pl.coderslab.entity;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
-
+import pl.coderslab.validation.ChildValidation;
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
@@ -15,24 +15,27 @@ public class Child {
     private long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @NotNull
+    @NotNull(groups = ChildValidation.class)
     private Person person;
-    @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER
+    @NotNull(groups = ChildValidation.class)
+    @ManyToMany(mappedBy = "childList")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Parent> parentList;
-    @NotEmpty
-    @ManyToMany(mappedBy = "childList",cascade = CascadeType.MERGE)//,fetch = FetchType.EAGER
+    @NotEmpty(groups = ChildValidation.class)
+    @ManyToMany(mappedBy = "childList")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER
     private List<Group> groupList;
-    @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "child")//, cascade = CascadeType.ALL)//,fetch = FetchType.EAGER)
     private List<Payment> paymentList;
-    @OneToMany (mappedBy = "child")//,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<ChildRelatedMessages> childRelatedMessagesList;
     @ManyToMany(mappedBy = "childList")//,fetch = FetchType.EAGER)
     private List<Allergie> allergieList;
     @OneToMany(mappedBy = "child")//,fetch = FetchType.EAGER)
     private List<InfoForTeacher> infoForTeachers;
-//    @NotBlank
+    //    @NotBlank(groups = ChildValidation.class)
+    @Digits(integer = 6, fraction = 0)
     private double startHour;
-//    @NotBlank
+    //    @NotBlank(groups = ChildValidation.class)
+    @Digits(integer = 6, fraction = 0)
     private double endHour;
 
     public Child() {
@@ -118,8 +121,22 @@ public class Child {
         this.id = id;
     }
 
-    public String getFullName(){
-        return person.getFirstName() + " "+ person.getLastName();
+    public String getFullName() {
+        return person.getFirstName() + " " + person.getLastName();
+    }
+
+    public Child(Person person, List<Parent> parentList, List<Group> groupList, List<Payment> paymentList,
+                 List<ChildRelatedMessages> childRelatedMessagesList, List<Allergie> allergieList,
+                 List<InfoForTeacher> infoForTeachers, double startHour, double endHour) {
+        this.person = person;
+        this.parentList = parentList;
+        this.groupList = groupList;
+        this.paymentList = paymentList;
+        this.childRelatedMessagesList = childRelatedMessagesList;
+        this.allergieList = allergieList;
+        this.infoForTeachers = infoForTeachers;
+        this.startHour = startHour;
+        this.endHour = endHour;
     }
 
     @Override
@@ -134,21 +151,22 @@ public class Child {
     public int hashCode() {
         return Objects.hash(id);
     }
-}
 
-/*
-Child:
-Pesel
-Imie
-Drugie Imie
-Nazwisko
-Adres zamieszkania
-Rodzic/opiekun (lista)
-Grupa (lista)
-Payments(lista)
-ChildRelatedMessages(lista)
-Allergie (lista)
-infoForTeacher (lista)
-Start (kiedy przyprowadzane – deklaracja)
-End (kiedy odbierane – deklaracja)
- */
+    public Child(Child that) {
+        this(that.getPerson(), that.getParentList(), that.getGroupList(), that.getPaymentList(), that.getChildRelatedMessagesList(),
+                that.getAllergieList(), that.getInfoForTeachers(), that.getStartHour(), that.getEndHour());
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", person=" + person.toString() +
+                ", parentList=" + parentList.stream().map(Parent::toString).reduce("", (a, b) -> a + b) +
+                ", groupList=" + groupList.stream().map(Group::toString).reduce("", (a, b) -> a + b) +
+                ", infoForTeachers=" + infoForTeachers +
+                ", startHour=" + startHour +
+                ", endHour=" + endHour +
+                '}';
+    }
+}

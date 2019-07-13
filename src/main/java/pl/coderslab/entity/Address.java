@@ -1,27 +1,30 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import pl.coderslab.validation.AdultValidation;
+import pl.coderslab.validation.ChildValidation;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Address {
     @Id
     @GeneratedValue
     private long id;
-//    @AssertTrue
     private boolean homeWork;
-    @NotBlank
+    //    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String street;
-    @NotBlank
+    //    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String numberBuilding;
     private String numberFlat;
-//    @NotBlank
+    //    @Pattern(regexp="\\d{5}")
     private int zipCode;
-    @NotBlank
+    //    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String city;
-    @NotBlank
+    //    @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     private String voievodyship;
 
     public Address() {
