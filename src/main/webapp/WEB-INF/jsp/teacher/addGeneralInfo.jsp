@@ -32,20 +32,17 @@
         <c:forEach items="${allGeneralInfos}" var="info">
             <tr>
                 <td>
-                   Message: ${info.message}<br/>
-                   Created: ${info.created}
+                    Message: ${info.message}<br/>
+                    Created: ${info.created}
                 </td>
                 <td>
                     <a href="deleteGeneralInfo/${info.id}">Delete General Info</a>
                 </td>
             </tr>
-
         </c:forEach>
-
     </table>
-
+    <br/>
 </div>
-
 
 <%@include file="../footer.jsp" %>
 

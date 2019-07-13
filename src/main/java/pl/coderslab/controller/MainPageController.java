@@ -46,10 +46,10 @@ public class MainPageController {
     @Autowired
     private EmailServiceImpl emailService;
 
-    @ModelAttribute (name = "generalInfo")
-    public List<GeneralInfo> generalInfoList(){
+    @ModelAttribute(name = "generalInfo")
+    public List<GeneralInfo> generalInfoList() {
         List<GeneralInfo> generalInfoList = generalInfoRepository.findAll();
-        if (generalInfoList == null){
+        if (generalInfoList == null) {
             generalInfoList = new ArrayList<>();
         }
         Collections.reverse(generalInfoList);
@@ -57,87 +57,85 @@ public class MainPageController {
     }
 
     @GetMapping("/")
-    public String homePage(Model model,HttpSession httpSession){
+    public String homePage(Model model, HttpSession httpSession) {
         LoginMode loginMode = new LoginMode();
-        model.addAttribute("loginMode",loginMode);
+        model.addAttribute("loginMode", loginMode);
         Object loggedUser = httpSession.getAttribute("loggedUser");
-        if (loggedUser!=null){
+        if (loggedUser != null) {
             return "homePage";
         }
         return "home";
     }
 
-    @PostMapping ("/")
-    public String homePage (@ModelAttribute("loginMode") @Valid LoginMode loginMode, BindingResult bindingResult,Model model, HttpSession httpSession){
-        if (bindingResult.hasErrors()){
+    @PostMapping("/")
+    public String homePage(@ModelAttribute("loginMode") @Valid LoginMode loginMode, BindingResult bindingResult, Model model, HttpSession httpSession) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> objectErrors = bindingResult.getAllErrors();
-            model.addAttribute("violations",objectErrors);
+            model.addAttribute("violations", objectErrors);
             return "home";
         }
 
-//        emailService.sendSimpleMessage("ckordes@gmail.com","test","test");
-
-       Person person = authenticationService.authenticate(loginMode.getEmail(),loginMode.getPassword());
-       if (person == null) {
-           return "redirect:/";
-       }else {
-           Teacher teacher = teacherRepository.findByPerson(person);
-           Parent parent = parentRepository.findByPerson(person);
-           String loggedUser ="";
-           long id =0;
-           if(teacher!=null){
-               loggedUser="teacher";
-               id = teacher.getId();
-               httpSession.setAttribute("loggedUser",loggedUser);
-               httpSession.setAttribute("id",id);
-               return "redirect:/teacher/mainPage";
-           }else if (parent!=null){
-               loggedUser = "parent";
-               id = parent.getId();
-               httpSession.setAttribute("loggedUser",loggedUser);
-               httpSession.setAttribute("id",id);
-               return "redirect:/parent/mainPage";
-           }else{
-               return "redirect:/";
-           }
-       }
+        Person person = authenticationService.authenticate(loginMode.getEmail(), loginMode.getPassword());
+        if (person == null) {
+            return "redirect:/";
+        } else {
+            Teacher teacher = teacherRepository.findByPerson(person);
+            Parent parent = parentRepository.findByPerson(person);
+            String loggedUser = "";
+            long id = 0;
+            if (teacher != null) {
+                loggedUser = "teacher";
+                id = teacher.getId();
+                httpSession.setAttribute("loggedUser", loggedUser);
+                httpSession.setAttribute("id", id);
+                return "redirect:/teacher/mainPage";
+            } else if (parent != null) {
+                loggedUser = "parent";
+                id = parent.getId();
+                httpSession.setAttribute("loggedUser", loggedUser);
+                httpSession.setAttribute("id", id);
+                return "redirect:/parent/mainPage";
+            } else {
+                return "redirect:/";
+            }
+        }
     }
 
     @GetMapping("/changePassword")
-    public String changePassword(Model model, HttpSession httpSession){
+    public String changePassword(Model model, HttpSession httpSession) {
         Parent parent = parentRepository.findById((long) httpSession.getAttribute("id"));
-        Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
-        if(parent!=null){
+        Teacher teacher = teacherRepository.findById((long) httpSession.getAttribute("id"));
+        if (parent != null) {
             parent.getPerson().setPassword("");
-            model.addAttribute("person",parent.getPerson());
+            model.addAttribute("person", parent.getPerson());
             return "authentication/changePassword";
-        }else if (teacher !=null){
+        } else if (teacher != null) {
             teacher.getPerson().setPassword("");
-            model.addAttribute("person",teacher.getPerson());
+            model.addAttribute("person", teacher.getPerson());
             return "authentication/changePassword";
-        }else {
+        } else {
             return "redirect:/";
         }
     }
 
-    @PostMapping ("/changePassword")
-    public String changePassword(@ModelAttribute("person") @Validated(AdultValidation.class) Person person, BindingResult bindingResult, HttpSession httpSession){
-        if (bindingResult.hasErrors()){
+    @PostMapping("/changePassword")
+    public String changePassword(@ModelAttribute("person") @Validated(AdultValidation.class) Person person, BindingResult bindingResult, HttpSession httpSession) {
+        if (bindingResult.hasErrors()) {
             return "authentication/changePassword";
         }
         Parent parent = parentRepository.findById((long) httpSession.getAttribute("id"));
-        Teacher teacher = teacherRepository.findById((long)httpSession.getAttribute("id"));
-        if(parent!=null){
+        Teacher teacher = teacherRepository.findById((long) httpSession.getAttribute("id"));
+        if (parent != null) {
             String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
-            emailService.sendSimpleMessage(person.getEmail(),"Change Password","You have changed the password. \n New password is: "+person.getPassword());
+            emailService.sendSimpleMessage(person.getEmail(), "Change Password", "You have changed the password. \n New password is: " + person.getPassword());
             person.setPassword(hashedPassword);
             personRepository.save(person);
             parent.setPerson(person);
             parentRepository.save(parent);
             return "redirect:/";
-        }else {
+        } else {
             String hashedPassword = BCrypt.hashpw(person.getPassword(), BCrypt.gensalt());
-            emailService.sendSimpleMessage(person.getEmail(),"Change Password","You have changed the password. \n New password is: "+person.getPassword());
+            emailService.sendSimpleMessage(person.getEmail(), "Change Password", "You have changed the password. \n New password is: " + person.getPassword());
             person.setPassword(hashedPassword);
             personRepository.save(person);
             teacher.setPerson(person);
@@ -147,17 +145,9 @@ public class MainPageController {
     }
 
     @RequestMapping("/loggOff")
-    public String loggOff(HttpSession httpSession){
+    public String loggOff(HttpSession httpSession) {
         httpSession.removeAttribute("loggedUser");
         httpSession.removeAttribute("id");
         return "redirect:/";
     }
-
-
 }
-
-/*
-        if (httpSession.getAttribute("loggedUser")==null){
-            return "redirect:/authentication/login";
-        }
- */

@@ -14,20 +14,21 @@
     <title>Add Group</title>
 </head>
 <body class="container">
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <div class="general">
-<form:form method="post" modelAttribute="group">
-    Group name: <form:input path="name"/>
-    <form:errors path="name"/><br/>
-    Description: <form:input path="description"/>
-    <form:errors path="description"/><br/>
-    <input type="submit" value="Save">
-</form:form>
+    <form:form method="post" modelAttribute="group">
+        Group name: <form:input path="name"/>
+        <form:errors path="name"/><br/>
+        Description: <form:input path="description"/>
+        <form:errors path="description"/><br/>
+        <input type="submit" value="Save">
+    </form:form>
 
-<c:forEach items="${allGroups}" var="group">
-   <span class="backColor"> ${group.name} <a href="editgroup/${group.id}" class="backColor">Edit Group</a></span><br />
-</c:forEach>
+    <c:forEach items="${allGroups}" var="group">
+        <span class="backColor"> ${group.name} <a href="editgroup/${group.id}"
+                                                  class="backColor">Edit Group</a></span><br/>
+    </c:forEach>
 </div>
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 </body>
 </html>

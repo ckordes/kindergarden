@@ -14,24 +14,24 @@
     <title>Welcome in kindergarden</title>
 </head>
 <body class="container">
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 
 <div class="general">
     <h3>General Messages</h3>
     <table class="table">
-    <c:forEach items="${generalInfo}" var="info">
+        <c:forEach items="${generalInfo}" var="info">
         <tr style="background: aquamarine">
             <td>
-        Message: ${info.message}<br />
-        Created: ${info.created}<br />
-        <br />
-            <br/>
+                Message: ${info.message}<br/>
+                Created: ${info.created}<br/>
+                <br/>
+                <br/>
             </td>
-    </c:forEach>
+            </c:forEach>
     </table>
 </div>
 
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>
 
 </body>
 </html>

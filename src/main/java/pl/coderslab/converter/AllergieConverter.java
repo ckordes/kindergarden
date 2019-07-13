@@ -9,6 +9,7 @@ import pl.coderslab.repository.AllergieRepository;
 public class AllergieConverter implements Converter<String, Allergie> {
     @Autowired
     AllergieRepository allergieRepository;
+
     @Override
     public Allergie convert(String s) {
         return allergieRepository.findById(Long.parseLong(s));

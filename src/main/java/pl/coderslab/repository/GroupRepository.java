@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.entity.Group;
 
 @Repository
-public interface GroupRepository extends JpaRepository<Group,Long> {
+public interface GroupRepository extends JpaRepository<Group, Long> {
 
     Group findById(long id);
 }

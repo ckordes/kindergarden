@@ -1,11 +1,7 @@
 package pl.coderslab.entity;
 
-import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2DTM2;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
-import pl.coderslab.validation.AdultValidation;
 import pl.coderslab.validation.ChildValidation;
-
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -160,21 +156,17 @@ public class Child {
         this(that.getPerson(), that.getParentList(), that.getGroupList(), that.getPaymentList(), that.getChildRelatedMessagesList(),
                 that.getAllergieList(), that.getInfoForTeachers(), that.getStartHour(), that.getEndHour());
     }
-}
 
-/*
-Child:
-Pesel
-Imie
-Drugie Imie
-Nazwisko
-Adres zamieszkania
-Rodzic/opiekun (lista)
-Grupa (lista)
-Payments(lista)
-ChildRelatedMessages(lista)
-Allergie (lista)
-infoForTeacher (lista)
-Start (kiedy przyprowadzane – deklaracja)
-End (kiedy odbierane – deklaracja)
- */
+    @Override
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", person=" + person.toString() +
+                ", parentList=" + parentList.stream().map(Parent::toString).reduce("", (a, b) -> a + b) +
+                ", groupList=" + groupList.stream().map(Group::toString).reduce("", (a, b) -> a + b) +
+                ", infoForTeachers=" + infoForTeachers +
+                ", startHour=" + startHour +
+                ", endHour=" + endHour +
+                '}';
+    }
+}

@@ -6,5 +6,5 @@ import pl.coderslab.entity.GroupInfo;
 
 @Repository
 public interface GroupInfoRepository extends JpaRepository<GroupInfo, Long> {
-GroupInfo findFirstByOrderByIdDesc();
+    GroupInfo findFirstByOrderByIdDesc();
 }

@@ -16,17 +16,17 @@
 <body class="container">
 
 <%@include file="../header.jsp" %>
+<h3>Edit Teacher ${teacher.fullName}</h3>
 
 <form:form modelAttribute="teacher" method="post">
-    <br/>
-    <h4>Personal Data</h4>
+
     First Name: <form:input path="person.firstName"/><form:errors path="person.firstName"/> <br/>
     Second Name: <form:input path="person.secondName"/><form:errors path="person.secondName"/> <br/>
     Last Name: <form:input path="person.lastName"/><form:errors path="person.lastName"/> <br/>
     Id Number: <form:input path="person.idNumber"/><form:errors path="person.idNumber"/> <br/>
     PESEL: <form:input path="person.pesel"/><form:errors path="person.pesel"/> <br/>
-<%--    <form:hidden path="person.email"/>--%>
-<%--    <form:hidden path="person.password"/>--%>
+    <%--    <form:hidden path="person.email"/>--%>
+    <%--    <form:hidden path="person.password"/>--%>
     E-mail: <form:input path="person.email"/><form:errors path="person.email"/> <br/>
     Password: <form:hidden path="person.password"/><form:errors path="person.password"/> <br/>
 

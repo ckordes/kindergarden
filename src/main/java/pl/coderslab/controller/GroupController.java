@@ -63,7 +63,7 @@ public class GroupController {
 
     @PostMapping("/addgroup")
     public String addGroup(@ModelAttribute @Valid Group group, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "/group/addGroup";
         }
         groupRepository.save(group);
@@ -91,7 +91,7 @@ public class GroupController {
     }
 
     @RequestMapping("/deleteGroup/{id}")
-    public String deleteGroup(@PathVariable long id){
+    public String deleteGroup(@PathVariable long id) {
         groupRepository.delete(id);
         return "redirect:/teacher/mainPage";
     }

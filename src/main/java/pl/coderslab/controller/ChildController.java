@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import com.sun.org.apache.xml.internal.dtm.ref.DTMDefaultBaseIterators;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,14 +8,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.entity.*;
+import pl.coderslab.pojo.EmailServiceImpl;
 import pl.coderslab.repository.*;
 import pl.coderslab.validation.ChildValidation;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
 import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 @RequestMapping("/child")
@@ -31,6 +33,10 @@ public class ChildController {
     private AddressRepository addressRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private ChildRelatedMessagesRepository childRelatedMessagesRepository;
+    @Autowired
+    private EmailServiceImpl emailService;
     @Autowired
     private Validator validator;
 
@@ -68,7 +74,7 @@ public class ChildController {
 
     @PostMapping("/createChild")
     public String createChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "teacher/addChild";
         }
         Person person = child.getPerson();
@@ -83,6 +89,22 @@ public class ChildController {
 
     @RequestMapping("/deleteChild/{id}")
     public String deleteChild(@PathVariable long id) {
+        Child child = childRepository.findById(id);
+        for (Group group : child.getGroupList()) {
+            Group groupRepo = groupRepository.findById(group.getId());
+            List<Child> childList = groupRepo.getChildList();
+            childList.remove(child);
+            groupRepository.save(groupRepo);
+        }
+        for (Parent parent : child.getParentList()) {
+            Parent parentRepo = parentRepository.findById(parent.getId());
+            List<Child> childList = parentRepo.getChildList();
+            childList.remove(child);
+            parentRepository.save(parentRepo);
+        }
+        for (ChildRelatedMessages message : child.getChildRelatedMessagesList()) {
+            childRelatedMessagesRepository.delete(message.getId());
+        }
         childRepository.delete(id);
         return "redirect:/teacher/mainPage";
     }
@@ -92,24 +114,64 @@ public class ChildController {
         Child child = childRepository.findById(id);
         Child tempChild = new Child(child);
         model.addAttribute("child", child);
-        model.addAttribute("tempChild",tempChild);
-
+        System.out.println("Child - " + child.toString());
+        model.addAttribute("tempChild", tempChild);
+        System.out.println("tempChild - " + tempChild.toString());
         return "teacher/editChild";
     }
 
     @PostMapping("/editchild/{id}")
-    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult,@ModelAttribute("tempChild")Child tempChild) {
-        if(bindingResult.hasErrors()){
+    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "teacher/editChild";
         }
+        Child childRepo = childRepository.findById(child.getId());
+
         Person person = child.getPerson();
+        person.setId(childRepo.getPerson().getId());
         Address address = person.getHomeAddress();
+        address.setId(childRepo.getPerson().getHomeAddress().getId());
         addressRepository.save(address);
         personRepository.save(person);
-        childRepository.save(child);
-        updateParentRepo(child);
-        updateGroupRepo(child);
+        childRepository.save(childRepo);
+        updateParentRepo(childRepo);
+        updateGroupRepo(childRepo);
         return "redirect:/teacher/mainPage";
+    }
+
+    @GetMapping("/displayChild/{id}")
+    public String displayChild(@PathVariable long id, Model model) {
+        Child child = childRepository.findById(id);
+        ChildRelatedMessages childRelatedMessages = new ChildRelatedMessages();
+        model.addAttribute("child", child);
+        model.addAttribute("childRelatedMessages", childRelatedMessages);
+        return "parent/displayChild";
+    }
+
+    @PostMapping("/displayChild/{id}")
+    public String displayChild(@PathVariable long id, @ModelAttribute ChildRelatedMessages childRelatedMessages) {
+        Child child = childRepository.findById(id);
+        //adding email sending functionality
+        Set<Person> personSet = new HashSet<>();
+        for (Parent parent : child.getParentList()) {
+            personSet.add(parent.getPerson());
+        }
+        for (Group group : child.getGroupList()) {
+            for (Teacher teacher : group.getTeacherList()) {
+                personSet.add(teacher.getPerson());
+            }
+        }
+        for (Person person : personSet) {
+            emailService.sendSimpleMessage(person.getEmail(), "New information related " + child.getFullName(),
+                    childRelatedMessages.getMessage());
+        }
+        childRelatedMessages.setCreated(LocalDateTime.now());
+        childRelatedMessages.setChild(child);
+        childRelatedMessagesRepository.save(childRelatedMessages);
+        childRelatedMessages = childRelatedMessagesRepository.findFirstByOrderByIdDesc();
+        child.getChildRelatedMessagesList().add(childRelatedMessages);
+        childRepository.save(child);
+        return "redirect:/child/displayChild/" + child.getId();
     }
 
     private void updateParentRepo(Child child) {
@@ -135,5 +197,4 @@ public class ChildController {
             groupRepository.save(tempGroup);
         }
     }
-
 }

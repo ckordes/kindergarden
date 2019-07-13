@@ -17,6 +17,7 @@ public class Person {
     @GeneratedValue
     private long id;
 
+    @Column(unique = true)
     @NotBlank(groups = {ChildValidation.class, AdultValidation.class})
     @PESEL(groups = {ChildValidation.class, AdultValidation.class})
     private String pesel;
@@ -36,10 +37,10 @@ public class Person {
 
     @NotBlank(groups = AdultValidation.class)
     @Email(groups = AdultValidation.class)
+    @Column(unique = true)
     private String email;
     @NotBlank(groups = AdultValidation.class)
     private String password;
-
 
     public Person() {
     }
@@ -127,20 +128,18 @@ public class Person {
     public String getFullName() {
         return this.getFirstName() + " " + this.getLastName();
     }
-}
 
-/*
-Parent:
-Pesel
-Numer dowodu
-Imie
-Drugie Imie
-Nazwisko
-Adres zamieszkania
-Zaklad pracy
-Telefon kontaktowy (lista)
-Email
-Rodzic/opiekun (true/false)
-Dziecko (lista)
-Allowed (czy moze odebrac z przedszkola czy nie)
- */
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", pesel='" + pesel + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+}

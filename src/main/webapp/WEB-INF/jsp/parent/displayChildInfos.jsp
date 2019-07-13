@@ -14,11 +14,10 @@
 </head>
 <body class="container">
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 
 
-
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

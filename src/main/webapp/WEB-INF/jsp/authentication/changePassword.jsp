@@ -14,7 +14,7 @@
     <title>Change Mail or Password</title>
 </head>
 <body class="container">
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <h4>Change Password and Email</h4>
 <div style="background: red; width: 300px;">Don't forget to change password</div>
 <form:form method="post" modelAttribute="person">
@@ -43,13 +43,13 @@
     <form:hidden path="workAddress.street"/>
 
     E-mail: <form:input path="email"/>
-    <form:errors path="email"/> <br />
+    <form:errors path="email"/> <br/>
     Password: <form:input path="password"/>
-    <form:errors path="password"/> <br />
+    <form:errors path="password"/> <br/>
     <input type="submit" value="Save">
 </form:form>
 
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

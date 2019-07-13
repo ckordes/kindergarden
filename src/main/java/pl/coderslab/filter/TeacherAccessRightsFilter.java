@@ -13,13 +13,12 @@ public class TeacherAccessRightsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpSession httpSession = ((HttpServletRequest) servletRequest).getSession();
-        if (httpSession.getAttribute("loggedUser") == null || !httpSession.getAttribute("loggedUser").equals("teacher") ){
+        if (httpSession.getAttribute("loggedUser") == null || !httpSession.getAttribute("loggedUser").equals("teacher")) {
             ((HttpServletResponse) servletResponse).sendRedirect("../");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -28,6 +27,5 @@ public class TeacherAccessRightsFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

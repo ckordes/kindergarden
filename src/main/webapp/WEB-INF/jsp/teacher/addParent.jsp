@@ -15,7 +15,7 @@
 </head>
 <body class="container">
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 
 <h3>Add Parent</h3>
 <div>
@@ -33,31 +33,37 @@
             <c:forEach items="${allChildren}" var="child">
                 <option value="${child.id}" ${parent.childList.contains(child) ? 'selected="selected"' : ''}>${child.fullName}</option>
             </c:forEach>
-        </form:select><form:errors path="childList"/> <br />
-        Allowed to pick up: <form:checkbox path="allowedToPickUp"/><br />
-        Parent/Guardian: <form:checkbox path="guardian" checked="true"/><br />
+        </form:select><form:errors path="childList"/> <br/>
+        Allowed to pick up: <form:checkbox path="allowedToPickUp"/><br/>
+        Parent/Guardian: <form:checkbox path="guardian" checked="true"/><br/>
 
         <h3>Home Address</h3><br/>
         Street: <form:input path="person.homeAddress.street"/><form:errors path="person.homeAddress.street"/> <br/>
-        Building number: <form:input path="person.homeAddress.numberBuilding"/><form:errors path="person.homeAddress.numberBuilding"/> <br/>
-        Flat number: <form:input path="person.homeAddress.numberFlat"/> <form:errors path="person.homeAddress.numberFlat"/> <br/>
+        Building number: <form:input path="person.homeAddress.numberBuilding"/><form:errors
+            path="person.homeAddress.numberBuilding"/> <br/>
+        Flat number: <form:input path="person.homeAddress.numberFlat"/> <form:errors
+            path="person.homeAddress.numberFlat"/> <br/>
         Zip Code: <form:input path="person.homeAddress.zipCode"/><form:errors path="person.homeAddress.zipCode"/> <br/>
         City: <form:input path="person.homeAddress.city"/><form:errors path="person.homeAddress.city"/> <br/>
-        Voievodyship: <form:input path="person.homeAddress.voievodyship"/><form:errors path="person.homeAddress.voievodyship"/> <br/>
+        Voievodyship: <form:input path="person.homeAddress.voievodyship"/><form:errors
+            path="person.homeAddress.voievodyship"/> <br/>
         <h3>Work Address</h3><br/>
-        Work Place Name: <form:input path="companyName"/><form:errors path="companyName"/> <br />
+        Work Place Name: <form:input path="companyName"/><form:errors path="companyName"/> <br/>
         Street: <form:input path="person.workAddress.street"/><form:errors path="person.workAddress.street"/> <br/>
-        Building number: <form:input path="person.workAddress.numberBuilding"/><form:errors path="person.workAddress.numberBuilding"/> <br/>
-        Flat number: <form:input path="person.workAddress.numberFlat"/> <form:errors path="person.workAddress.numberFlat"/> <br/>
+        Building number: <form:input path="person.workAddress.numberBuilding"/><form:errors
+            path="person.workAddress.numberBuilding"/> <br/>
+        Flat number: <form:input path="person.workAddress.numberFlat"/> <form:errors
+            path="person.workAddress.numberFlat"/> <br/>
         Zip Code: <form:input path="person.workAddress.zipCode"/><form:errors path="person.workAddress.zipCode"/> <br/>
         City: <form:input path="person.workAddress.city"/><form:errors path="person.workAddress.city"/> <br/>
-        Voievodyship: <form:input path="person.workAddress.voievodyship"/><form:errors path="person.workAddress.voievodyship"/> <br/>
+        Voievodyship: <form:input path="person.workAddress.voievodyship"/><form:errors
+            path="person.workAddress.voievodyship"/> <br/>
 
         <input type="submit" value="Save">
     </form:form>
 </div>
 
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

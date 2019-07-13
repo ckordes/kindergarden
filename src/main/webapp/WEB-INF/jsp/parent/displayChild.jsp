@@ -15,8 +15,29 @@
 </head>
 <body class="container">
 
-<%@include file="../header.jsp"%>
-
+<%@include file="../header.jsp" %>
+<h2>${child.fullName}</h2>
+First Name: ${child.person.firstName}<br/>
+Second Name: ${child.person.secondName}<br/>
+Last Name: ${child.person.lastName}<br/>
+<h5>Parents</h5>
+<table>
+    <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>ID number</td>
+        <td>Allowed to pick up</td>
+    </tr>
+    <c:forEach items="${child.parentList}" var="parent">
+        <tr>
+            <td>${parent.person.firstName}</td>
+            <td>${parent.person.lastName}</td>
+            <td>${parent.person.idNumber}</td>
+            <td>${parent.allowedToPickUp}</td>
+        </tr>
+    </c:forEach>
+</table>
+<br/>
 <h4>Add Child Info</h4>
 <form:form modelAttribute="childRelatedMessages" method="post">
     Message: <form:input path="message"/>
@@ -28,15 +49,16 @@
     <c:forEach items="${child.childRelatedMessagesList}" var="message">
         <tr>
             <td>
-                Message: ${message.message}<br />
+                Message: ${message.message}<br/>
                 Created: ${message.created}
             </td>
         </tr>
     </c:forEach>
-</table><br/>
+</table>
+<br/>
 
 
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

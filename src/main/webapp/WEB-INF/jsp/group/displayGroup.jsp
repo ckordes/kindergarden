@@ -15,29 +15,35 @@
 <body class="container">
 <%@include file="../header.jsp" %>
 <div class="general">
+    <h2>${group.name}</h2>
+    <div>
+        <h4>Manage Group</h4>
+        <span class="backColor"> <a
+                href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a></span>
+    </div>
+
     <h4>Children in groups</h4>
     <table>
         <c:forEach items="${group.childList}" var="child">
             <tr class="backColor">
                 <td>
-                    Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel} <a
-                        href="../../parent/displayChild/${child.id}">Display Child Info</a> <br/>
+                    Child full name: ${child.fullName}, childs PESEL: ${child.person.pesel}
+
+                </td>
+                <td>
+                    <a href="../../child/displayChild/${child.id}">Display Child Info</a> <br/>
                 </td>
             </tr>
         </c:forEach>
 
     </table>
 
-
-    <div>
-        <span class="backColor"> <a
-                href="/kindergarden_war_exploded/group/deleteGroup/${group.id}">Delete Group</a></span>
-    </div>
-    <div>
-        <span class="backColor"><a href="/kindergarden_war_exploded/teacher/addGroupInfo/${group.id}">Add Info For Whole Group</a></span>
-    </div>
     <div>
         <h4 class="backColor" style="width: 150px;">Group Messages</h4>
+        <div>
+            <span class="backColor"><a href="/kindergarden_war_exploded/teacher/addGroupInfo/${group.id}">Add Info For Whole Group</a></span>
+        </div>
+        <br/>
         <table>
             <c:forEach items="${group.groupInfoList}" var="info">
                 <tr class="backColor">
