@@ -16,7 +16,7 @@ public class Allergie {
     @JoinTable(name = "child_alergies", joinColumns = @JoinColumn(name = "allergie_id")
             , inverseJoinColumns = @JoinColumn(name = "child_id"))
     private List<Child> childList;
-    @NotBlank (groups = ChildValidation.class)
+    @NotBlank(groups = ChildValidation.class)
     private String typeOfAllergie;
 
     public Allergie() {

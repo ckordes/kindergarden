@@ -9,8 +9,9 @@ import pl.coderslab.repository.TeacherRepository;
 public class TeacherConverter implements Converter<String, Teacher> {
     @Autowired
     TeacherRepository teacherRepository;
+
     @Override
-    public Teacher convert(String s){
+    public Teacher convert(String s) {
         return teacherRepository.findById(Long.parseLong(s));
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.entity.ChildRelatedMessages;
 
 @Repository
-public interface ChildRelatedMessagesRepository extends JpaRepository<ChildRelatedMessages,Long> {
+public interface ChildRelatedMessagesRepository extends JpaRepository<ChildRelatedMessages, Long> {
     ChildRelatedMessages findFirstByOrderByIdDesc();
+
     ChildRelatedMessages findById(long id);
 }

@@ -16,7 +16,7 @@ public class GroupInfo {
     @GeneratedValue
     private long id;
 
-    @NotBlank (groups = {AdultValidation.class, ChildValidation.class})
+    @NotBlank(groups = {AdultValidation.class, ChildValidation.class})
     private String message;
 
     private LocalDateTime created;

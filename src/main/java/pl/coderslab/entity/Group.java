@@ -83,20 +83,22 @@ public class Group {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return id == group.id ;
+        return id == group.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, childList, description, groupInfoList, teacherList);
     }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", groupInfoList=" + groupInfoList +
+                ", teacherList=" + teacherList +
+                '}';
+    }
 }
-
-
-/*
-Group:
-Nazwa
-Dziecko (lista)
-Opis grupy
-Info (lista)
- */

@@ -14,7 +14,7 @@ public class ChildRelatedMessages {
     @GeneratedValue
     private long id;
 
-    @NotBlank (groups = {AdultValidation.class, ChildValidation.class})
+    @NotBlank(groups = {AdultValidation.class, ChildValidation.class})
     private String message;
 
     @ManyToOne//(fetch = FetchType.EAGER)

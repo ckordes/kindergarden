@@ -20,7 +20,7 @@
     <form:form modelAttribute="loginMode" method="post">
         Email: <form:input path="email"/>
         <form:errors path="email"/><br/>
-        Password: <form:input path="password"/>
+        Password: <form:password path="password"/>
         <form:errors path="password"/><br/>
 
         <input type="submit" value="Login">

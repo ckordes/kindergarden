@@ -19,7 +19,7 @@ public class ParentAccessRightsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpSession httpSession = ((HttpServletRequest) servletRequest).getSession();
-        if (httpSession.getAttribute("loggedUser") == null || !httpSession.getAttribute("loggedUser").equals("parent")){
+        if (httpSession.getAttribute("loggedUser") == null || !httpSession.getAttribute("loggedUser").equals("parent")) {
             ((HttpServletResponse) servletResponse).sendRedirect("../");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -31,7 +31,3 @@ public class ParentAccessRightsFilter implements Filter {
 
     }
 }
-
-/*
-ParentAccessRightsFilter
- */

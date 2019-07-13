@@ -1,8 +1,6 @@
 package pl.coderslab.entity;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import pl.coderslab.validation.AdultValidation;
 
 import javax.persistence.*;
@@ -76,7 +74,7 @@ public class Parent {
         this.id = id;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return this.person.getFullName();
     }
 
@@ -86,5 +84,16 @@ public class Parent {
         if (obj == null || getClass() != obj.getClass()) return false;
         Parent parent = (Parent) obj;
         return id == parent.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "id=" + id +
+                ", person=" + person +
+                ", companyName='" + companyName + '\'' +
+                ", guardian=" + guardian +
+                ", allowedToPickUp=" + allowedToPickUp +
+                '}';
     }
 }

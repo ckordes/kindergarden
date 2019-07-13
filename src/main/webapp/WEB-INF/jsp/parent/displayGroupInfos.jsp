@@ -14,23 +14,24 @@
 </head>
 <body class="container">
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 <div>
-<h4>Group Info List</h4>
-<table>
-    <c:forEach items="${group.groupInfoList}" var="info">
-        <tr>
-            <td>
-                Message: ${info.message}<br/>
-                Created: ${info.created}
-            </td>
-        </tr>
-    </c:forEach>
+    <h4>Group Info List</h4>
+    <table>
+        <c:forEach items="${group.groupInfoList}" var="info">
+            <tr>
+                <td>
+                    Message: ${info.message}<br/>
+                    Created: ${info.created}
+                </td>
+            </tr>
+        </c:forEach>
 
-</table><br/>
+    </table>
+    <br/>
 </div>
 
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

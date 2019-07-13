@@ -14,19 +14,19 @@
 </head>
 <body class="container">
 
-<%@include file="../header.jsp"%>
+<%@include file="../header.jsp" %>
 
 <h4>List of children</h4>
 <c:forEach items="${childList}" var="child">
-    <a href="displayChild/${child.id}">${child.fullName}</a><br />
+    <a href="../child/displayChild/${child.id}">${child.fullName}</a><br/>
 </c:forEach>
 
 <h4>List of Groups</h4>
 <c:forEach items="${groupList}" var="group">
-    <a href="groupInfo/${group.id}">${group.name}</a><br />
-</c:forEach><br />
+    <a href="groupInfo/${group.id}">${group.name}</a><br/>
+</c:forEach><br/>
 
-<%@include file="../footer.jsp"%>
+<%@include file="../footer.jsp" %>
 
 </body>
 </html>

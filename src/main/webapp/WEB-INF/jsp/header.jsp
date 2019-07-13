@@ -6,5 +6,5 @@
 
     <a href="/kindergarden_war_exploded/changePassword" style="background: aquamarine">Change E-mail or Password</a>
     <a href="/kindergarden_war_exploded/loggOff" style="background: aquamarine">Log Off</a>
-    <br />
+    <br/>
 </header>

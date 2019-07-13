@@ -17,6 +17,7 @@
 <%@include file="../header.jsp" %>
 <div class="general">
     <div>
+        <h4>Create a Teacher</h4>
         <a href="addTeacher">Create Teacher</a><br/>
     </div>
 

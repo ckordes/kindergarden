@@ -27,11 +27,15 @@
         <c:forEach items="${allChildren}" var="child">
             <tr>
                 <td>
-                    <a href="editchild/${child.id}">Edit ${child.fullName}</a>
+                    <a href="displayChild/${child.id}">Display: ${child.fullName}</a><br/>
                 </td>
                 <td>
-                    <a href="deleteChild/${child.id}">Delete Child</a><br/>
+                    <a href="editchild/${child.id}">Edit</a>
                 </td>
+                <td>
+                    <a href="deleteChild/${child.id}">Delete</a><br/>
+                </td>
+
             </tr>
         </c:forEach>
     </table>

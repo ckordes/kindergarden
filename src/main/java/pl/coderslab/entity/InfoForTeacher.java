@@ -12,7 +12,7 @@ public class InfoForTeacher {
     @GeneratedValue
     private long id;
 
-    @NotBlank (groups = AdultValidation.class)
+    @NotBlank(groups = AdultValidation.class)
     private String message;
 
     @ManyToOne//(fetch = FetchType.EAGER)

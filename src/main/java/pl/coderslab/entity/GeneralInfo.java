@@ -16,7 +16,6 @@ public class GeneralInfo {
     @GeneratedValue
     private long id;
 
-
     @NotBlank// (groups = {AdultValidation.class, ChildValidation.class})
     private String message;
 
