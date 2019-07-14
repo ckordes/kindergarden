@@ -13,6 +13,7 @@ import pl.coderslab.repository.*;
 import pl.coderslab.validation.ChildValidation;
 
 import javax.jws.WebParam;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.Validator;
 import java.time.LocalDateTime;
@@ -110,20 +111,54 @@ public class ChildController {
     }
 
     @GetMapping("/editchild/{id}")
-    public String editChild(@PathVariable long id, Model model) {
+    public String editChild(@PathVariable long id, Model model, HttpSession httpSession) {
         Child child = childRepository.findById(id);
-        Child tempChild = new Child(child);
+        String listOfParents = "";
+        String listOfGroups = "";
         model.addAttribute("child", child);
-        System.out.println("Child - " + child.toString());
-        model.addAttribute("tempChild", tempChild);
-        System.out.println("tempChild - " + tempChild.toString());
+        for (Parent parent : child.getParentList()) {
+            listOfParents += parent.getId() + ",";
+        }
+        for(Group group : child.getGroupList()){
+            listOfGroups+=group.getId() + ",";
+        }
+        httpSession.setAttribute("listOfParents", listOfParents);
+        httpSession.setAttribute("listOfGroups", listOfGroups);
         return "teacher/editChild";
     }
 
     @PostMapping("/editchild/{id}")
-    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult) {
+    public String editChild(@ModelAttribute @Validated(ChildValidation.class) Child child, BindingResult bindingResult, HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             return "teacher/editChild";
+        }
+        String listOfParents = (String) httpSession.getAttribute("listOfParents");
+        String listOfGroups = (String) httpSession.getAttribute("listOfGroups");
+        String[] arrayGroups = listOfGroups.split(",");
+        String[] arrayParents = listOfParents.split(",");
+        List<Long> listParents = new ArrayList<>();
+        List<Long> listGroups = new ArrayList<>();
+        for (Parent parent : child.getParentList()) {
+            listParents.add(parent.getId());
+        }
+        for(Group group:child.getGroupList()){
+            listGroups.add(group.getId());
+        }
+        for (int i = 0; i < arrayParents.length; i++) {
+            if (!listParents.contains(Long.valueOf(arrayParents[i]))) {
+                Parent tempParent = parentRepository.findById(Long.valueOf(arrayParents[i]));
+                List<Child> childList = tempParent.getChildList();
+                childList.remove(childRepository.findById(child.getId()));
+                parentRepository.save(tempParent);
+            }
+        }
+        for (int i=0; i< arrayGroups.length;i++){
+            if(!listGroups.contains(Long.valueOf(arrayGroups[i])));{
+                Group tempGroup = groupRepository.findById(Long.valueOf(arrayGroups[i]));
+                List<Child> childList = tempGroup.getChildList();
+                childList.remove(childRepository.findById(child.getId()));
+                groupRepository.save(tempGroup);
+            }
         }
         Child childRepo = childRepository.findById(child.getId());
 
@@ -133,6 +168,8 @@ public class ChildController {
         address.setId(childRepo.getPerson().getHomeAddress().getId());
         addressRepository.save(address);
         personRepository.save(person);
+        childRepo.setParentList(child.getParentList());
+        childRepo.setGroupList(child.getGroupList());
         childRepository.save(childRepo);
         updateParentRepo(childRepo);
         updateGroupRepo(childRepo);

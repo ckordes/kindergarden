@@ -18,6 +18,7 @@
 <%@include file="../header.jsp" %>
 <h4>Edit Child</h4>
 <form:form method="post" modelAttribute="child">
+    <form:hidden path="person.id"/>
     First Name: <form:input path="person.firstName"/>
     <form:errors path="person.firstName"/> <br/>
     Second Name: <form:input path="person.secondName"/>
@@ -33,6 +34,7 @@
     End hour: <form:input path="endHour"/>
     <form:errors path="endHour"/> <br/>
     <h4>Child Address</h4>
+    <form:hidden path="person.homeAddress.id"/>
     Street: <form:input path="person.homeAddress.street"/>
     <form:errors path="person.homeAddress.street"/> <br/>
     Building Number: <form:input path="person.homeAddress.numberBuilding"/>

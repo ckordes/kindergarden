@@ -20,6 +20,7 @@
 <div>
     <h3>Edit Parent ${parent.fullName}</h3>
     <form:form method="post" modelAttribute="parent">
+        <form:hidden path="person.id"/>
         First Name: <form:input path="person.firstName"/><form:errors path="person.firstName"/> <br/>
         Second Name: <form:input path="person.secondName"/><form:errors path="person.secondName"/> <br/>
         Last Name: <form:input path="person.lastName"/><form:errors path="person.lastName"/> <br/>
@@ -39,6 +40,7 @@
         Parent/Guardian: <form:checkbox path="guardian" checked="true"/><br/>
 
         <h3>Home Address</h3><br/>
+        <form:hidden path="person.homeAddress.id"/>
         Street: <form:input path="person.homeAddress.street"/><form:errors path="person.homeAddress.street"/> <br/>
         Building number: <form:input path="person.homeAddress.numberBuilding"/> <form:errors
             path="person.homeAddress.numberBuilding"/> <br/>
@@ -49,6 +51,7 @@
         Voievodyship: <form:input path="person.homeAddress.voievodyship"/><form:errors
             path="person.homeAddress.voievodyship"/> <br/>
         <h3>Work Address</h3><br/>
+        <form:hidden path="person.workAddress.id"/>
         Work Place Name: <form:input path="companyName"/><form:errors path="companyName"/> <br/>
         Street: <form:input path="person.workAddress.street"/><form:errors path="person.workAddress.street"/> <br/>
         Building number: <form:input path="person.workAddress.numberBuilding"/><form:errors

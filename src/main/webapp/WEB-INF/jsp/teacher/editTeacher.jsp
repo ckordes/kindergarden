@@ -19,7 +19,7 @@
 <h3>Edit Teacher ${teacher.fullName}</h3>
 
 <form:form modelAttribute="teacher" method="post">
-
+    <form:hidden path="person.id"/>
     First Name: <form:input path="person.firstName"/><form:errors path="person.firstName"/> <br/>
     Second Name: <form:input path="person.secondName"/><form:errors path="person.secondName"/> <br/>
     Last Name: <form:input path="person.lastName"/><form:errors path="person.lastName"/> <br/>
@@ -31,7 +31,7 @@
     Password: <form:hidden path="person.password"/><form:errors path="person.password"/> <br/>
 
     <h4>Home Address</h4>
-
+    <form:hidden path="person.homeAddress.id"/>
     Street: <form:input path="person.homeAddress.street"/><form:errors path="person.homeAddress.street"/> <br/>
     Building number: <form:input path="person.homeAddress.numberBuilding"/><form:errors
         path="person.homeAddress.numberBuilding"/> <br/>
@@ -43,6 +43,7 @@
         path="person.homeAddress.voievodyship"/> <br/>
 
     <h4>Work Address</h4>
+    <form:hidden path="person.workAddress.id"/>
     Street: <form:input path="person.workAddress.street"/><form:errors path="person.workAddress.street"/> <br/>
     Building number: <form:input path="person.workAddress.numberBuilding"/><form:errors
         path="person.workAddress.numberBuilding"/> <br/>
